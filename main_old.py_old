@@ -262,7 +262,7 @@ WEBAPP2_dep_CONFIG = {
         "user_attributes": ["email_address", "name", "user_level", "user_group"],
     },
     "webapp2_dep_extras.sessions": {
-        "secret_key": """[║┼¥╦¡ú▬¡☺EÆú®◄':§!¾ÐéT│.(\↨╚C♀:┘)ü,ü┘┘☻☺å½, ¤·©÷═a↔#Ñµ "↔idàJT"""
+        "secret_key": """find in local env file"""
     },
 }
 
