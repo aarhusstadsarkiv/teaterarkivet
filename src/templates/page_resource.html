@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% set domain = "resourcepage" %}
+{% if collection == "records" %}
+    {% set title = resource.identification.identifier %}
+{% else %}
+    {% set title = resource.display_label %}
+{% endif %}
+
+{% block page_complementary %}
+    {% if operation == 'view' %}
+        <div class="complementary--default dropdown" role="complementary">
+            <a class="complementary_header dropdown_trigger complementary_trigger pre-icon icon_settings">Værktøjer</a>
+            <ul class="dropdown_list--full">
+                {% include 'components/toolbox.html' %}
+            </ul>
+        </div>
+    {% else %}
+        <div class="complementary--default dropdown" role="complementary">
+            <ul></ul>
+        </div>
+    {% endif %}
+{% endblock page_complementary %}
+
+{% block page_header %}
+    <div class="page-header pad-left_medium">
+        {% if operation == 'edit' %}
+            <h3>Redigeringsform</h3>
+        {% endif %}
+    </div>
+{% endblock page_header %}
+
+{% block page_content %}
+    <div class="page-content">
+        <div class="resource_wrapper">
+            {% if operation == 'view' %}
+                {% if collection == "records" %}
+                    {% include 'components/metadata-records--aarhusteater.html' %}
+                {% elif collection in ["people", "creators"] %}
+                    {% include 'components/metadata-people--aarhusteater.html' %}
+                {% elif collection == "events" %}
+                    {% include 'components/metadata-events--aarhusteater.html' %}
+                {% elif collection == "collections" %}
+                    {% include 'components/metadata-collections--aarhusteater.html' %}
+                {% elif collection == "relations" %}
+                    {% include 'components/metadata-relations--aarhusteater.html' %}
+                {% endif %}
+
+                {% if resource.relations %}
+                    {% include 'components/relations--aarhusteater.html' %}
+                {% endif %}
+
+            {% elif operation == "edit" %}
+                {% if collection == "relations" %}
+                    {% include 'components/form_relation.html' %}
+                {% else %}
+                    {% include 'components/form_resource_v2.html' %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock page_content %}
+
+{% block page_footer %}
+    <div class="page-footer">
+    </div>
+{% endblock page_footer %}
+

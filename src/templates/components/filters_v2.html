@@ -1,0 +1,72 @@
+{# To be placed inside "block page_header" in page_collections.html #}
+
+{% if filters|length() > 0 %}
+	<div class="filters">
+		<div class="media filters_heading">
+			{% if filters|length() > 1 %}
+			<a class="media_right pre-icon icon_close" href="/search">Fjern alle</a>
+	        {% endif %}
+			<p class="media_content">Aktive søgefiltre</p>
+		</div>
+		{% for filter in filters %}
+			<div class="media filter_item">
+				<ul class="media_right">
+				{% if filter.view_link and filter.key in ['events', 'people'] %}
+					<li class="filter_action">
+						<a class="pure-icon--large icon_eye" href="/{{filter.view_link}}" title="Vis {% if filter.label%}{{filter.label}}{% else %}{{filter.value}}{% endif %}"></a>
+					</li>
+				{% endif %}			
+				<li class="filter_action">
+					<a class="pure-icon--large icon_close" href="/search?{{filter.remove_link}}" title="Fjern {% if filter.label%}{{filter.label}}{% else %}{{filter.value}}{% endif %} som søgefilter"></a>
+				</li>
+				</ul>
+				{% if filter.key == 'subjects' %}
+					{% set icon = "icon_subject" %}
+				{% elif filter.key == 'locations' %}
+					{% set icon = "icon_pin" %}
+				{% elif filter.key == 'people' %}
+					{% set icon = "icon_person--solid" %}
+				{% elif filter.key == 'events' %}
+					{% set icon = "icon_event" %}
+				{% elif filter.key == 'start_date' %}
+					{% set icon = "icon_event" %}
+				{% elif filter.key == 'end_date' %}
+					{% set icon = "icon_event" %}
+				{% elif filter.key == 'collection' %}
+					{% set icon = "icon_collection" %}
+				{% elif filter.key == 'series' %}
+					{% set icon = "icon_series" %}
+				{% elif filter.key == 'online_only' %}
+					{% set icon = "icon_display" %}
+				{% elif filter.key == 'content_type' %}
+					{% if filter.display_label == 'Tekst' %}
+						{% set icon = "icon_text" %}
+					{% elif filter.display_label == 'Billede' %}
+						{% set icon = "icon_image" %}
+					{% elif filter.display_label == 'Film' %}
+						{% set icon = "icon_film" %}
+					{% elif filter.display_label == 'Datasæt' %}
+						{% set icon = "icon_dataset" %}
+					{% elif filter.display_label == 'Lyd' %}
+						{% set icon = "icon_sound" %}
+					{% endif %}
+				{% elif filter.key == 'license' %}
+					{% set icon = "icon_license" %}
+				{% elif filter.key in ['collection_tags', 'tags', 'admin_tags'] %}
+					{% set icon = "icon_bookmark" %}
+				{% elif filter.key == 'creators' %}
+					{% set icon = "icon_creator" %}
+				{% elif filter.key == 'organisations' %}
+					{% set icon = "icon_organisation" %}
+				{% elif filter.key == 'curators' %}
+					{% set icon = "icon_curator" %}
+				{% endif %}
+				<div class="media_content">
+					<p class="filter_text pre-icon {{icon}}">
+                            {% if filter.label%}{{filter.label}}{% else %}{{filter.value}}{% endif %}{% if filter.key == 'start_date' %} (og senere) {% elif filter.key == 'end_date' %} (og tidligere) {% endif %}
+					</p>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endif %}

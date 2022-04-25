@@ -1,0 +1,103 @@
+<div class="resource_section media" id="representation">
+    {% if resource.portrait %}
+        <div class="resource_image media_left">
+            {% if resource.portrait is string %}
+                {% set image = resource.portrait %}
+            {% else %}
+                {% set image = resource.portrait[0] %}
+            {% endif %}
+            <img src="{{image|replace('http://', 'https://')}}">
+        </div>
+    {% endif %}
+
+    {% if resource.ext_data and 'ext_data' not in site.excluded_keys %}
+        {% set ext = resource.ext_data %}
+    {% endif %}
+
+    <div class="resource_core media_content" id="core">
+        <dl class="definitionlist">
+            {% if resource.display_label and 'display_label' not in site.excluded_keys %}
+                <dt>Navn</dt>
+                <dd class="font-weight_bold">{{resource.display_label}}</dd>
+            {% endif %}
+
+            {% if resource.occupation and 'occupation' not in site.excluded_keys %}
+                <dt>Beskæftigelse</dt>
+                <dd>
+                {% for idx in resource.occupation %}
+                    <span>{{idx}}</span>
+                {% endfor %}
+                </dd>
+            {% endif %}
+
+            <!--
+            {% if resource.gender and 'gender' not in site.excluded_keys %}
+                <dt>Køn</dt>
+                <dd>{{resource.gender}}</dd>
+            {% endif %}
+            -->
+
+            {% if resource.date_of_birth and 'date_of_birth' not in site.excluded_keys %}
+                <dt>Født</dt>
+                <dd>{{resource.date_of_birth}}</dd>
+            {% endif %}
+
+            {% if resource.date_of_death and 'date_of_death' not in site.excluded_keys %}
+                <dt>Død</dt>
+                <dd>{{resource.date_of_death}}</dd>
+            {% endif %}
+        </dl>
+    </div>
+</div>
+
+<div class="resource_section" id="description">
+    <h3>Beskrivelse</h3>
+    <dl class="definitionlist">
+        {% if resource.description and 'description' not in site.excluded_keys %}
+            <p class="pad-bottom_large">{{resource.description}}</p>
+        {% endif %}
+
+        {% if ext and ext.year_of_education and ('year_of_education' not in site.excluded_keys) %}
+            <dt>Uddannelsesår</dt>
+            <dd>{{ext.year_of_education}}</dd>
+        {% endif %}
+
+         {% if ext and ext.place_of_education and ('place_of_education' not in site.excluded_keys) %}
+            <dt>Uddannelsessted</dt>
+            <dd>{{ext.place_of_education}}</dd>
+        {% endif %}
+
+        {% if ext and ext.original_id and ('original_id' not in site.excluded_keys) %}
+            <dt>Originalt ID</dt>
+            <dd>{{ext.original_id}}</dd>
+        {% endif %}
+
+        {% if is_creator or is_subject %}
+            <dt>Arkivalier</dt>
+            <dd>
+                {% if is_subject %}
+                    <a class="link--filter" href="/search?{{collection}}={{id}}">Se arkivalier, der omhandler denne person</a>
+                {% endif %}
+                {% if is_creator %}
+                    <a class="link--filter" href="/search?creators={{id}}">Se arkivalier, der denne person har skabt</a>
+                {% endif %}
+            </dd>
+        {% endif %}
+    </dl>
+
+{% if resource.sources and 'sources' not in site.excluded_keys %}
+    <div class="resource_section" id="sources">
+        <h3>Kilder</h3>
+        {% if resource.sources is iterable and resource.sources is not string %}
+            <ul>
+                {% for idx in resource.sources %}
+                    <li><a href="{{idx}}">{{idx}}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>{{resource.sources}}</p>
+        {% endif %}
+    </div>
+{% endif %}
+
+</div>

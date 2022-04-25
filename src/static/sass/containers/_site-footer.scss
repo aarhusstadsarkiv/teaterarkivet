@@ -1,0 +1,74 @@
+/* .site-footer
+*/
+
+// Implementation
+.site-footer {
+	height: $footerHeight * 1.6;
+	background-color: darken(white, 4%);
+	color: inherit;
+}
+
+.homepage .site-footer {
+    display: none;
+}
+
+.site-footer_wrapper {
+    padding: 1.2em $paddingLarge;
+	@extend .clearfix;
+	max-width: 65em;
+	margin: 0 auto;
+}
+
+.site-footer_menu--info,
+.site-footer_menu--logos {
+    margin: 0 auto;
+    width: 18em;
+}
+
+.site-footer_menu--logos {
+    margin-top: 1.2em;
+}
+
+.site-footer_logo {
+    display: block;
+    margin: 0 auto;
+    width: 12em;
+    // float: left;
+}
+
+.site-footer_listitem {
+    display: block;
+    font-size: 85%;
+    padding: 0.1em 0;
+    text-align: center;
+    a,
+    a:visited,
+    a:hover {
+        color: $link-color;
+    }
+}
+.site-footer_heading {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-bottom: .5em;
+}
+
+@media screen and (min-width: 55em) {
+	.site-footer {
+		height: $footerHeight;
+	}
+    .site-footer_menu--info {
+        margin: 0;
+        float: left;
+    }
+    .site-footer_menu--logos {
+        margin: 0;
+        width: 12em;
+        float: right;
+    }
+    .site-footer_listitem,
+    .site-footer_heading {
+        text-align: left;
+    }
+}

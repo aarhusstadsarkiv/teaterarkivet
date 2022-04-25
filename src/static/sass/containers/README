@@ -1,0 +1,5 @@
+/* Containers are application-specific wrappers
+** around generic components and modules.
+** In combination with utility-classes, containers
+** add the application-specific look and feel
+*/

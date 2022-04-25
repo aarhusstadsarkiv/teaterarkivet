@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% set domain = "applicationpage" %}
+{% set title = "Kontakt os" %}
+
+
+{% block page_complementary %}
+    <div class="complementary--default dropdown" role="complementary">
+        <ul></ul>
+    </div>
+{% endblock page_complementary %}
+
+{% block page_header %}
+    <div class="page-header pad-left_medium">
+        <h3>Kontakt os</h3>
+    </div>
+{% endblock page_header %}
+
+{% block page_content %}
+    <div class="page-content">
+		<dl class="contactlist">
+			<dt>Adresse</dt>
+			<dd><a href="{{site.map}}">{{site.address}}</a></dd>
+			<dt>Telefonnummer</dt>
+			<dd><a href="tel:{{site.telephone}}">{{site.telephone}}</a></dd>
+			<dt>Email</dt>
+			<dd><p><a href="mailto:{{site.mail}}">{{site.mail}}</a></p></dd>
+			<dt>Hjemmeside</dt>
+			<dd><a href="{{site.homepage}}">{{site.homepage}}</a></dd>
+			<dt>Facebook</dt>
+			<dd><p><a href="{{facebook}}">Teaterarkivaren</a></p></dd>
+		</dl>
+    </div>
+{% endblock page_content %}

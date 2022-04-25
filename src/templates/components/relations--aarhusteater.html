@@ -1,0 +1,60 @@
+{# Included in resourcepages #}
+
+{# TODO - Hardcoded endpoints #}
+<div class="resource_section" style="margin-top:15px;" id ="relations">
+{% if collection == 'events' %}
+    {% set object_domain = 'people' %}
+{% else %}
+    {% set object_domain = 'events' %}
+{% endif %}
+
+    {% for idx in resource.relations %}
+        {% if idx.get('data') %}
+            <div class="media">
+                <!-- <div class="relation_toolbar media_right"></div>  -->
+                <h3 class="media_content">
+                    {{idx.label|capitalize}}
+                    <span class="relation_toolbar relation_action float_right link post-icon icon_add" data-action="create" title="Opret ny relation"></span>
+                </h3>
+            </div>
+            <dl class="relationslist">
+                {% for rel in idx.data %}
+                    <div id="{{rel.rel_id}}" class="relation media">
+                        <dt>
+                            <div class="relation_toolbar pad-right_medium">
+                                <span class="relation_action link post-icon icon_delete" data-action="delete" title="Slet relationen"></span>
+                                <!-- <span class="link post-icon icon_edit" data-href="/relations/{{rel.rel_id}}/edit"></span> -->
+                            </div>
+                            <span>{{rel.rel_label}}</span>
+                        </dt>
+                        <dd><a class="link--filter" href="/{{object_domain}}/{{rel.id}}">{{rel.display_label}}</a></dd>
+                    </div>
+                {% endfor %}
+            </dl>
+        {% endif %}
+    {% endfor %}
+
+    <form id="relation-form" class="clearfix" action="/relations" method="POST">
+        <input type="hidden" name="subject_domain" value="{{resource.domain}}">
+        <input type="hidden" name="subject_id" value="{{resource.id}}">
+        <input type="hidden" name="object_domain">
+        <input type="hidden" name="object_id">
+        {% if collection == 'events' and resource.date_from %}
+            <input type="hidden" name="rel_start" value="{{resource.date_from}}">
+        {% endif %}
+        {% if collection == 'events' and resource.date_to %}
+            <input type="hidden" name="rel_end" value="{{resource.to_date_to}}">
+        {% endif %}
+        <fieldset>
+            <label for="rel_label" class="float_left">Relationslabel</label>
+            <input type="text" name="rel_label" class="float_left">
+        </fieldset>
+        <fieldset class="pad-top_medium">
+            <label for="object_label" class="float_left">Relationsobjekt</label>
+            <div class="float_left">
+                <input class="typeahead" name="object_label" type="text" autocomplete="off" placeholder="Find entitet">
+            </div>
+        </fieldset>
+        <button type="submit" class="pad-horizontal_medium">Opret relation</button>
+    </form>
+</div>

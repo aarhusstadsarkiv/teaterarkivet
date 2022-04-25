@@ -1,0 +1,314 @@
+{% set ordering = {
+    "core": ["license", "curators", "creators", "content_type", "identifier"],
+    "identification": ["ingest_id", "related_content"],
+    "administration": ["copyright_expires", "rightsholder", "original_id", "declassification_expires", "admin_tags", "admin_notes", "admin_data"],
+    "description": ["title", "textcontent", "collection", "series", "from_date", "to_date", "creators", "subjects", "collection_tags", "desc_notes", "desc_data"],
+    "entities": ["people", "organisations", "locations", "events", "tags"],
+    "analog_content": ["physical_extent", "physical_size", "physical_format", "physical_condition", "storage_room", "storage_rack", "storage_unit", "storage_shelf", "storage_id"],
+    "digital_content": ["filename", "mimetype", "digital_size", "digital_format", "filelist", "original_filename", "checksum", "checksum_algorithm", "last_checksum_date"],
+    "representations": ["small_size_url", "medium_size_url", "large_size_url", "download_url"]
+    }
+%}
+{% if resource.representations %}
+    {% set rep = resource.representations %}
+{% endif %}
+
+<div class="resource_section media" id="representation">
+{% if rep and rep.medium_size_url %}
+    <div class="resource_image media_left">
+        {% if (resource.administration.license.id not in ["6", "8"]) or user %}
+            {# If resource is an image #}
+            {% if resource.description.content_type.id == "19" %}
+            {#
+            <a href="{% if rep.large_size_url %}{{rep.large_size_url}}{% else %}{{rep.medium_size_url}}{% endif %}" target="_blank">
+                <img src="{{rep.medium_size_url}}" data-action="zoom">
+            </a>
+            #}
+            <img src="{{rep.medium_size_url}}" data-action="zoom">
+            {# If resource is a video #}
+            {% elif resource.description.content_type.id == "21" and rep.download_url %}                
+            <div class="frame_wrapper--video">
+                {% set video_id = rep.download_url %}
+                {% set video_id_index = rep.download_url.rindex('/') %}
+                <iframe class="frame" src="https://player.vimeo.com/video/{{video_id[video_id_index + 1:]}}" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+            {# If resource is a textdocument - must be a pdf-file as well #}
+            {% elif resource.description.content_type.id == "1" and rep.download_url %}
+            <a href="{{rep.download_url}}" target="_blank">
+                <img src="{{rep.medium_size_url}}">
+            </a>
+            {% else %}
+            <img src="{{rep.medium_size_url}}">
+                {% if resource.administration.license %}
+                    <p>{{resource.administration.license.name}}</p>
+                {% endif %}
+            {% endif %}
+        {% else %}
+        <div>
+            <span>
+                NOTE: Arkivaliet er helt eller delvist digitaliseret, men ophavsretsbeskyttet materiale uden tilhørende brugsaftale kan kun ses på stadsarkivets læsesal
+            </span>
+        </div>
+        {% endif %}
+    </div>
+{% endif %}
+
+    <div class="resource_core media_content" id="core">
+        <dl class="definitionlist">
+            {% if rep %}
+                {% set start_idx = rep.medium_size_url.rindex('/') + 2 %}
+                <dt>Åbn/vis</dt>
+                {% if rep.download_url %}
+                    <dd><a class="link" href="{{rep.download_url}}">{{rep.download_url[start_idx:]}}</a></dd>
+                {% elif rep.large_size_url %}
+                    <dd><a class="link" href="{{rep.large_size_url}}">{{rep.large_size_url[start_idx:]}}</a></dd>
+                {% elif rep.medium_size_url %}
+                    <dd><a class="link" href="{{rep.medium_size_url}}">{{rep.medium_size_url[start_idx:]}}</a></dd>
+                {% endif %}
+            {% endif %}
+
+            {% if 'license' not in site.excluded_keys %}
+                <dt>Brugslicens</dt>
+                <dd>
+                    {% if 'license' in site.excluded_query_params %}
+                        {{resource.administration.license.name}}
+                    {% else %}
+                        <a class="link--filter" href="/{{collection}}?{{resource.administration.license.new_link}}">{{resource.administration.license.name}}</a>
+                    {% endif %}
+                </dd>
+            {% endif %}
+
+            {% if 'curators' not in site.excluded_keys %}
+                <dt>Kurator</dt>
+                <dd>
+                {% for idx in resource.identification.curators %}
+                    {% if 'curators' in site.excluded_query_params %}
+                        {{idx.name}}
+                    {% else %}
+                        <a class="link--filter" href="/{{collection}}?{{idx.new_link}}">{{idx.name}}</a>
+                    {% endif %}
+                {% endfor %}
+                </dd>
+            {% endif %}
+
+            {% if 'creators' not in site.excluded_keys %}
+                <dt>{% if resource.description.content_type.id == '19' %}Fotograf{% else %}Skaber{% endif %}</dt>
+                <dd>
+                {% for idx in resource.description.creators %}
+                    {% if 'creators' in site.excluded_query_params %}
+                        {{idx.name}}
+                    {% else %}
+                        <a class="link--filter" href="/{{collection}}?{{idx.new_link}}">{{idx.name}}</a>
+                    {% endif %}
+                {% endfor %}
+                </dd>
+            {% endif %}
+
+            {% if 'content_type' not in site.excluded_keys %}
+                <dt>Arkivalietype</dt>
+                <dd>
+                {% if 'content_type' in site.excluded_query_params %}
+                    {% if resource.description.collection.id == '48' %}
+                        Myndighedssag 
+                    {% elif resource.description.collection.id == '47' %}
+                        Bogudgivelse
+                    {% else %}
+                        {{resource.description.content_type.name}}
+                    {% endif %}
+                {% else %}
+                    <a class="link--filter" href="/{{collection}}?{{resource.description.content_type.new_link}}">{{resource.description.content_type.name}}</a></dd>
+                {% endif %}
+            {% endif %}
+
+            {% if 'identifier' not in site.excluded_keys %}
+                <dt>Arkivalie ID</dt>
+                <dd>{{id}}</dd>
+            {% endif %}
+        </dl>
+    </div>
+</div>
+
+<div class="resource_section" id="description">
+    <!-- Description-group -->
+    {% for group in ['description'] %}
+        {% if resource[group] and group not in site.excluded_keys %}
+            {% set resource_grouping = resource[group] %}
+            <h3>{{translate[group]}}</h3>
+            <dl class="definitionlist">
+            {% for k in ordering.get(group) %}
+                {% if k not in site.excluded_keys and k not in ordering.get('core') %}
+                    {% set v = resource_grouping.get(k) %}
+                    {% if v %}
+                        {% if v|length < 1 %}
+                            {% continue %}
+                        {% else %}
+                            <div class="media">
+                                <dt>{{translate[k]}}</dt>
+                                {% if k == 'series' %}
+                                    <dd>
+                                        {% if k in site.excluded_query_params %}
+                                            {% for e in v %}
+                                                {{e}}{% if not loop.last %}<span> / </span>{% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            {% for e in v %}
+                                                <a class="link--filter" href="/{{collection}}?{{e.new_link}}" alt="Søg med dette filter">{{e.name}}</a>{% if not loop.last %}<span> / </span>{% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+                                    </dd>
+                                {% elif k == 'title' %}
+                                    <dd class="title">{{v}}</dd>
+                                {% elif v is string or v is number %}
+                                    <dd {% if k == 'textcontent' %}class="textcontent"{% endif %}>{{v}}</dd>
+                                {% elif k == 'collection_tags' %}
+                                    <dd>
+                                    {% for e in v %}
+                                        {% if e.new_link %}
+                                            {% if k in site.excluded_query_params %}
+                                                {{e.name}}
+                                            {% else %}
+                                                <a class="link--filter js-collection_tag" href="/{{collection}}?{{e.new_link}}" alt="Søg med dette filter">{{e.name}}</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {{e}}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </dd>
+                                {% elif v is mapping %}
+                                    {% if v.new_link %}
+                                        {% if k in site.excluded_query_params %}
+                                            <dd>{{v.name}}</dd>
+                                        {% else %}
+                                            <dd><a class="link--filter" href="/{{collection}}?{{v.new_link}}" alt="Søg med dette filter">{{v.name}}</a></dd>
+                                        {% endif %}
+                                    {% else %}
+                                        <dd>
+                                        {% for key, value in v.items() %}
+                                            <span>{{key}}: </span><span>{{value}}</span>
+                                        {% endfor %}
+                                        </dd>
+                                    {% endif %}
+                                {% else %}
+                                    <dd>
+                                    {% for e in v %}
+                                        {% if e.new_link %}
+                                            {% if k in site.excluded_query_params %}
+                                                {{e.name}}
+                                            {% else %}
+                                                <a class="link--filter" href="/{{collection}}?{{e.new_link}}" alt="Søg med dette filter">{{e.name}}</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {{e}}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </dd>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if (not resource.description.creators) and group == 'description' %}
+                <dt>Skaber</dt>
+                <dd>Ukendt</dd>
+            {% endif %}
+
+            </dl>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="resource_section" id="entities">
+    {% if resource.entities and "entities" not in site.excluded_keys %}
+        <h3>Relationer</h3>
+        <dl class="definitionlist">
+        {% for k in ordering.entities %}
+            {% if k not in site.excluded_keys %}
+                {% set v = resource.entities.get(k) %}
+                {% if v %}
+                    {% if v|length < 1 %}
+                        {% continue %}
+                    {% else %}
+                        <div class="media">
+                            <dt>{{translate[k]}}</dt>
+                            <dd>
+                            {% for e in v %}
+                                {% if e.id %}
+                                    {% if k in site.excluded_query_params %}
+                                        {{e.name}}
+                                    {% else %}
+                                        <a class="link--filter" href="/{{k}}/{{e.id}}" alt="Vis {{e.name}}">{{e.name}}</a>
+                                    {% endif %}
+                                {% else %}
+                                    {{e}}
+                                {% endif %}
+                            {% endfor %}
+                            </dd>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        </dl>
+    {% endif %}
+</div>
+
+<div class="resource_section" id="administration">
+    <!-- Description-group -->
+    {% if user %}
+        {% set groups = ['identification', 'administration', 'analog_content', 'digital_content'] %}
+    {% else %}
+        {% set groups = ['identification', 'administration'] %}
+    {% endif %}
+
+    {% for group in groups %}
+        {% if resource[group] and group not in site.excluded_keys %}
+            {% set resource_grouping = resource[group] %}
+            <h3>{{translate[group]}}</h3>
+            <dl class="definitionlist">
+            {% for k in ordering.get(group) %}
+                {% if k not in site.excluded_keys %}
+                    {% set v = resource_grouping.get(k) %}
+                    {% if v %}
+                        {% if v|length < 1 %}
+                            {% continue %}
+                        {% else %}
+                            <div class="media">
+                                <dt>{{translate[k]}}</dt>
+                                {% if v is string or v is number %}
+                                    <dd>{{v}}</dd>
+                                {% elif v is mapping %}
+                                    {% if k in site.excluded_query_params %}
+                                        <dd>{{v.name}}</dd>
+                                    {% elif v.new_link %}
+                                        <dd><a class="link--filter" href="/{{collection}}?{{v.new_link}}" alt="Søg med dette filter">{{v.name}}</a></dd>
+                                    {% else %}
+                                        <dd>
+                                            {% for key, value in v.items() %}
+                                            <span>{{key}}: </span><span>{{value}}</span>
+                                            {% endfor %}
+                                        </dd>
+                                    {% endif %}
+                                {% else %}
+                                    <dd>
+                                    {% for e in v %}
+                                        {% if k in site.excluded_query_params %}
+                                            <dd>{{v.name}}</dd>
+                                        {% elif e.new_link %}
+                                            <a class="link--filter" href="/{{collection}}?{{e.new_link}}" alt="Søg med dette filter">{{e.name}}</a>
+                                        {% else %}
+                                            {{e}}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </dd>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </dl>
+        {% endif %}
+    {% endfor %}
+</div>

@@ -1,0 +1,14 @@
+.definitionlist {
+	@extend .clearfix;
+    dt {
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 80%;
+        width: 11em;
+        padding-top: .3em; // to adjust the line-positioning, screwed by smaller fontsize - STATIC!
+        padding-bottom: $paddingSmall;
+    }
+    dd {
+        padding-bottom: $paddingMedium;
+    }
+}

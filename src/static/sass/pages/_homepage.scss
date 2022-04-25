@@ -1,0 +1,115 @@
+// Old homepage
+// .homepage {
+//     background-color: $bg-color--dark;
+//     background-size: 100%;
+//     background-repeat: no-repeat;
+//     background-position: center 7em;
+//     background-image: url("/static/images/ugle_white.png");
+
+//     // @media screen and (min-width: 35em) {
+//     //     background-image: url("/static/images/logo-300px-h.png");
+//     // }
+
+//     @media screen and (min-width: 55em) {
+//         background-position: center center;
+//         background-size: cover;
+// 		background-image: $bg-image;
+//     }   
+// }
+
+.homepage {
+    // background-color: $bg-color--dark;
+    background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	background-position: center 7em;
+	background-position: center center;
+	background-size: cover;
+	background-image: $bg-image;
+}
+
+    // background-image: url("/static/images/ugle_white.png");
+
+    // @media screen and (min-width: 35em) {
+    //     background-image: url("/static/images/logo-300px-h.png");
+    // }
+
+    // @media screen and (min-width: 55em) {
+
+    // }
+
+// Old style
+// .homepage_logo,
+// .homepage_text {
+// 	display: none;
+// 	@media screen and (min-width: 55em) {
+// 		display: block;
+// 	}
+// }
+
+.homepage_text {
+	font-size:1.25em;
+	color:white;
+	text-align: center;
+	margin: 2em 1em 0 1em;
+	@media screen and (min-width: 55em) {
+		position:fixed;
+		left:95px;
+		top:95px;
+		text-align: left;
+		margin-top: none;
+	}
+}
+.homepage_header_lead,
+.homepage_header {
+	font-size:1.5em;
+	padding-top:1em;
+	@media screen and (min-width: 40em) {
+		font-size: 1.6em;
+	}
+}
+.homepage_header_lead {
+	display: none;
+	@media screen and (min-width: 40em) {
+		display: inline;
+	}
+}
+.homepage_subheader {
+	display: none;
+	@media screen and (min-width: 40em) {
+		display: block;
+	}
+}
+.homepage_logo {
+	position: fixed;
+	right: 4px;
+	bottom: 16px;
+	@media screen and (min-width: 40em) {
+		right: 22px;
+		bottom: 20px;	
+	}
+}
+.homepage_search-link {
+	height: 2.6em;
+	display: block;	
+	border-radius: $border-radius;
+	margin: .5em .7em;;
+	padding: .6em;
+	color: gray;
+	background-color: white;
+	opacity: .9;
+	
+	@media screen and (min-width: 40em) {
+		position: absolute;
+		top: .4em;
+		width: 20em;
+	    left: 50%;
+    	-ms-transform: translate(-50%, 0);
+    	transform: translate(-50%, 0);
+		z-index: 5;
+	}
+	// @media screen and (min-width: 45em) {
+	// 	width: 22em;
+	// }
+}

@@ -1,0 +1,26 @@
+.relationslist {
+	@extend .clearfix;
+    dt {
+        font-style: italic;
+        width: 13em;
+    }
+    dd {
+        // Work as total bottom-padding both when side-by-side and
+        // stacked under the 'dt'-element
+        padding-bottom: $paddingMedium;
+    }
+}
+
+.relation_toolbar {
+    display: none;
+}
+
+#relation-form {
+    display: none;
+    background-color: #dedede;
+    padding: .5em;
+    margin-bottom: .8em;
+    label {
+        width: 8em;
+    }
+}

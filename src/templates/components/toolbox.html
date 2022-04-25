@@ -1,0 +1,27 @@
+{# Complementary content on resource-pages. To be placed inside block page_complementary #} 
+
+{#
+<li class="list_item">
+    <a class="list_link pre-icon icon_error" href="mailto:{{site.mail}}?Subject=Fejl:{{id}}">Indberet fejl</a>
+</li>
+#}
+<li class="list_item">
+    <a class="list_link pre-icon icon_suggestion" href="mailto:{{site.mail}}?Subject=Forslag:{{id}}">Send ændringsforslag</a>
+</li>
+{#
+<li class="list_item">
+    <a class="list_link pre-icon icon_code" href="?fmt=json">Hent i json-format</a>
+</li>
+#}
+{% if user and collection != 'records' %}
+    {# DELAYED
+    <li class="list_item">
+        <a class="list_link pre-icon icon_edit" href="?operation=edit">Redigér stamdata</a>
+    </li>
+    #}
+    {% if resource.relations %}
+        <li class="list_item">
+            <a id="edit-relations" class="list_link pre-icon icon_edit activator">Redigér relationer</a>
+        </li>
+    {% endif %}
+{% endif %}

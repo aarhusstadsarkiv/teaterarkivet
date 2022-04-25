@@ -1,0 +1,154 @@
+<div class="resource_section media" id="representation">
+    {% if resource.ext_data and 'ext_data' not in site.excluded_keys %}
+        {% set ext = resource.ext_data %}
+    {% endif %}
+
+    {% if resource.portrait %}
+        <div class="resource_image media_left">
+            {% if resource.portrait is string %}
+                {% set image = resource.portrait %}
+            {% else %}
+                {% set image = resource.portrait[0] %}
+            {% endif %}
+            <img src="{{image|replace('http://', 'https://')}}">
+        </div>
+    {% endif %}
+
+    <div class="resource_core media_content" id="core">
+        <dl class="definitionlist">
+            {% if 'display_label' not in site.excluded_keys %}
+                <dt>Titel</dt>
+                <dd class="font-weight_bold">{{resource.display_label}}</dd>
+            {% endif %}
+
+            {% if ext and ext.original_title and ('original_title' not in site.excluded_keys) %}
+                <dt>Org. titel</dt>
+                <dd>{{ext.original_title}}</dd>
+            {% endif %}
+
+            {% if ext and ext.season and ('season' not in site.excluded_keys) %}
+                <dt>Sæson</dt>
+                <dd>{{ext.season}}</dd>
+            {% endif %}
+
+            {% if ext and ext.stagename and ('stagename' not in site.excluded_keys) %}
+                <dt>Scene</dt>
+                <dd>{{ext.stagename}}</dd>
+            {% endif %}
+
+            {% if resource.date_from and ('date_from' not in site.excluded_keys) %}
+                <dt>Premiere</dt>
+                <dd>{{resource.date_from}}</dd>
+            {% endif %}
+
+            {% if resource.date_to and ('date_to' not in site.excluded_keys) %}
+                <dt>Afslutning</dt>
+                <dd>{{resource.date_to}}</dd>
+            {% endif %}
+
+            {% if ext and ext.playwright and ('playwright' not in site.excluded_keys) %}
+                <dt>Forfatter</dt>
+                <dd>{{ext.playwright}}</dd>
+            {% endif %}
+
+            {% if ext and ext.director and ('director' not in site.excluded_keys) %}
+                <dt>Instruktør</dt>
+                <dd>{{ext.director}}</dd>
+            {% endif %}
+        </dl>
+    </div>
+</div>
+
+<div class="resource_section" id="description">
+    <h3>Beskrivelse</h3>
+    <dl class="definitionlist">
+        {% if resource.description %}
+            <p class="pad-bottom_large">{{resource.description}}</p>
+        {% endif %}
+
+        {% if ext and ext.composer and ('composer' not in site.excluded_keys) %}
+            <dt>Komponist</dt>
+            <dd>{{ext.composer}}</dd>
+        {% endif %}
+
+        {% if ext and ext.scenographer and ('scenographer' not in site.excluded_keys) %}
+            <dt>Scenograf</dt>
+            <dd>{{ext.scenographer}}</dd>
+        {% endif %}
+
+        {% if ext and ext.translater and ('translater' not in site.excluded_keys) %}
+            <dt>Oversætter</dt>
+            <dd>{{ext.translater}}</dd>
+        {% endif %}
+
+        {% if ext and ext.production and ('production' not in site.excluded_keys) %}
+            <dt>Produktion</dt>
+            <dd>{{ext.production}}</dd>
+        {% endif %}
+
+        {% if ext and ext.bandleader and ('bandleader' not in site.excluded_keys) %}
+            <dt>Kapelmester</dt>
+            <dd>{{ext.bandleader}}</dd>
+        {% endif %}
+
+        {% if ext and ext.publisher and ('publisher' not in site.excluded_keys) %}
+            <dt>Forlag</dt>
+            <dd>{{ext.publisher}}</dd>
+        {% endif %}
+
+        {% if ext and ext.number_of_performances and ('number_of_performances' not in site.excluded_keys) %}
+            <dt>Opførelser</dt>
+            <dd>{{ext.number_of_performances}}</dd>
+        {% endif %}
+
+        {% if ext and ext.attendance and ('attendance' not in site.excluded_keys) %}
+            <dt>Belægning</dt>
+            <dd>{{ext.attendance}}</dd>
+        {% endif %}
+
+        {% if ext and ext.poster and ('poster' not in site.excluded_keys) %}
+            <dt>Plakat</dt>
+            <dd>Ja</dd>
+        {% endif %}
+
+        {% if ext and ext.programme and ('programme' not in site.excluded_keys) %}
+            <dt>Program</dt>
+            <dd>Ja</dd>
+        {% endif %}
+
+        {% if ext and ext.get("arkiv_id") and ('arkiv_id' not in site.excluded_keys) %}
+            <dt>Arkiv-id</dt>
+            <dd>{{ext.get("arkiv_id")}}</dd>
+        {% endif %}
+
+        {% if ext and ext.notes and ('notes' not in site.excluded_keys) %}
+            <dt>Noter</dt>
+            <dd>{{ext.notes}}</dd>
+        {% endif %}
+
+        {% if is_subject %}
+            <dt>Arkivalier</dt>
+            <dd><a class="link--filter" href="/search?{{collection}}={{id}}">Se relevante arkivalier</a></dd>
+        {% endif %}
+    </dl>
+
+{% if resource.sources and 'sources' not in site.excluded_keys %}
+    <div class="resource_section" id="sources">
+        <h3>Kilder</h3>
+        {% if resource.sources is iterable and resource.sources is not string %}
+            <ul>
+                {% for idx in resource.sources %}
+                    {% if idx.startswith('http') %}
+                        <li><a href="{{ idx.replace('http://', 'https://')|urlize(45) }}">{{idx}}</a></li>
+                    {% else %}
+                        <li>{{idx}}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>{{resource.sources}}</p>
+        {% endif %}
+    </div>
+{% endif %}
+
+</div>

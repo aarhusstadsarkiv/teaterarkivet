@@ -1,0 +1,94 @@
+/* Simple wrapper concerned with margin, position, transition
+** All animation and transitions are based on this pen:
+** http://codepen.io/dubiel/pen/yyWEVo
+*/
+
+.js .complementary--transform {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	opacity: 0;
+    // overflow: scroll;
+    overflow: hidden;
+    overflow-x: hidden;
+    background-color: lighten($bg-color--dark, 10%);
+	top: 0;
+	transition-property: all;
+	transition-duration: $duration;
+	-ms-transform: translateX(-100%);
+	transform: translateX(-100%);
+	-ms-overflow-style: -ms-autohiding-scrollbar;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	.site-link {
+	  	opacity: 0;
+	  	transition: opacity $duration $ease;
+		transition-delay: 500ms;
+		display: inline-block;
+	}
+
+	@media all and (min-width:45em) {
+		width: 18em;
+		max-width: 18em;
+	}
+}
+
+.js .complementary--transform.open {
+	z-index: 15;
+	opacity: 1;
+    transition-duration: $duration;
+	-ms-transform: translateX(0);
+	transform: translateX(0);
+
+	.site-link {
+		opacity: 1;
+	}
+}
+
+.js .complementary--default {
+	-ms-overflow-style: -ms-autohiding-scrollbar;	
+	&::-webkit-scrollbar {
+		display: none;
+	}
+
+	// On larger screens a simple, open ul in a fixed sidebar is generated
+	@media all and (min-width:45em) {
+		// Hide header when transforming comlementary--transform to complementary--default
+		.complementary_header {
+			display: none;
+		}
+	    position: fixed;
+	    top: $headerHeight;
+	    bottom: 0;
+	    width: 18em;
+		max-width: 18em;
+		padding-top: 0;
+		background-color: $bg-color--dark;
+	    overflow: hidden;
+	}
+}
+
+.complementary_header {
+	@extend .clearfix;
+	height: $headerHeight;
+	padding: 0 $paddingSmall;
+}
+
+.complementary_trigger {
+	display: block;
+	line-height: 3em;
+	background-color: darken(white, 5%);
+	border-bottom: 1px solid darken(white, 10%);
+}
+
+.complementary_inner {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+   	-ms-overflow-style: -ms-autohiding-scrollbar;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}

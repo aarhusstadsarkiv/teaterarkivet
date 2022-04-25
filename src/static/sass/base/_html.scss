@@ -1,0 +1,133 @@
+
+html {
+    font-size: 16px;
+    font-family: $font-family;
+    font-weight: $font-weight;
+    line-height: 1.4;
+    height: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    position: relative;
+    height: 100%;
+    min-height: 100%;
+    // font-size: 15px; // 1em;
+    color: $color;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+audio,
+canvas,
+img,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+// CJK - own global styling of html-tags
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+    border-bottom: 1px solid #DCDBDB;
+    margin-bottom: 1em;
+}
+h2 {
+    font-size: 130%;
+}
+h3 {
+    font-size: 115%;
+}
+
+a,
+a:hover,
+a:active,
+a:visited {
+    word-wrap: break-word;
+    outline: none;
+}
+
+a,
+a:active,
+a:visited {
+    text-decoration: none;
+}
+
+img {
+    //vertical-align: middle;
+    //width: 100%;
+    //width: auto;
+    max-width: 100%;
+    height: auto; // !important;
+}
+
+// From suit.css as a thin layer on top of normalize.css
+/**
+ * A thin layer on top of normalize.css that provides a starting point more
+ * suitable for web applications. Removes the default spacing and border for
+ * appropriate elements.
+ */
+
+
+iframe {
+  border: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+/**
+ * Suppress the focus outline on links that cannot be accessed via keyboard.
+ * This prevents an unwanted focus outline from appearing around elements that
+ * might still respond to pointer events.
+ */
+
+[tabindex="-1"]:focus {
+  outline: none !important;
+}
+
+// Based on http://codepen.io/chriscoyier/pen/DmnlJ
+
+

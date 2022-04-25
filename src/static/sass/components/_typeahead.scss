@@ -1,0 +1,43 @@
+// wrapper-span. block forces a width of 100%
+.twitter-typeahead {
+    display: block !important;
+}
+
+.tt-menu {
+    background-color: #FFFFFF;
+    margin: 10px 0;
+    padding: 4px 0;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    // border-radius: $border-radius;
+    box-shadow: $box-shadow; // 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tt-header {
+    color: $color--dark;
+    font-weight: bold;
+    font-size: 75%;
+    text-transform: uppercase;
+    padding: .6em 0 .3em .3em;
+    border-bottom: 1px solid #eee;
+}
+
+.tt-suggestion {
+    font-size: 90%;
+    color: #333;
+    margin: 0;
+    padding: .3em;
+    border-bottom: 1px solid #eee;
+    &:last-child {
+        border-bottom: none;
+    }
+    &:hover {
+        cursor: pointer;
+        background-color: darken(white, 5%);
+    }
+}
+
+// keyboard traversing
+.tt-suggestion.tt-cursor {
+    background-color: darken(white, 5%); // #0097cf;
+}

@@ -1,0 +1,80 @@
+/*
+EXTENDS:
+.clearfix
+
+PARAMS:
+$headerHeight		Outer block height
+$maxWidthColumn
+$paddingSmall
+
+TODO:
+*/
+
+// Outer wrapper
+%site-header {
+	@extend .clearfix;
+	width: 100%;
+	height: $headerHeight;
+	z-index: 5;
+}
+
+.site-header_wrapper {
+	padding: 0 $paddingSmall;
+}
+
+.site-header--default {
+	@extend %site-header;
+	background-color: $bg-color--dark;
+}
+
+.site-header--homepage {
+	@extend %site-header;
+	max-width: 65em;
+	margin: 0 auto;
+	background-color: transparent;
+}
+
+.js .site-header--default {
+	@media all and (min-width:45em) {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 18em;
+	}
+}
+
+// Styling of header-items
+// Uses placeholder and switch between homepage and default
+%site-header_item {
+	display: inline-block;
+	// padding: 0 $paddingSmall;
+	line-height: $headerHeight;
+	color: white;
+}
+
+.site-header_text {
+	@extend %site-header_item;
+}
+
+.site-header_link--default,
+.site-header_close {
+	@extend %site-header_item;
+	&:hover {
+		background-color: darken($bg-color--dark, 5%);
+	}
+	&:before {
+		@media screen and (min-width: 40em) {
+			padding-left: .2em;
+			padding-right: .2em;
+		}
+	}
+}
+
+.site-header_link--homepage {
+	@extend %site-header_item;
+	font-weight: 500;
+	font-size: 120%;
+	&[href="#site-search"] {
+		display: none;
+	}
+}

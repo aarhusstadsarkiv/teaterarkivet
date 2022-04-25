@@ -1,0 +1,208 @@
+{% set description = ["description", "collection", "series", "collection_tags", "desc_notes", "desc_data"] %}
+{% set entities = ["people", "events"] %}
+{% set administration = ["original_id", "admin_tags", "admin_notes", "admin_data"] %}
+
+<div class="resource_section media" id="representation">
+    {% if resource.portrait %}
+        <div class="media_left">
+            <div class="resource_image">
+                {% if user or (resource.availability.id == 4) %}
+                    {% if resource.representations and resource.representations.get("record_type") == "web_document" %}
+                        <a href="{{resource.representations.get('web_document_url')}}">
+                            <img class="resource-portrait" src="{{resource.portrait}}"/>
+                        </a>
+                    {% else %}
+                        <img src="{{resource.portrait}}" data-action="zoom">
+                    {% endif %}
+                {% else %}
+                    <div style="padding:1em;">NOTE: Arkivaliet er digitaliseret, men kan grundet aftale eller juridiske begrænsninger kun ses på arkivet.</div>
+                {% endif %}
+            </div>
+            {% if resource.representations and resource.representations.get("record_type") == "web_document" %}
+                <p style="text-align:center;padding-bottom:20px;font-size:80%;color:#111;">Klik på billedet for at hente som pdf-fil.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="resource_core media_content" id="core">
+        <dl class="definitionlist">
+            {% if resource.title %}
+                <dt>titel</dt>
+                <dd>
+                    <p>{{resource.title}}</p>
+                </dd>
+            {% elif resource.heading %}
+                <dt>Overskrift</dt>
+                <dd>
+                    <p>{{resource.heading}}</p>
+                </dd>
+            {% endif %}
+
+            {% if resource.get('creators') and 'creators' not in site.excluded_keys %}
+                <dt>{% if resource.content_types[0].id == '19' %}Fotograf{% else %}Skaber{% endif %}</dt>
+                <dd>
+                {% for idx in resource.creators %}
+                    <span>{{idx.label}}</span>
+                {% endfor %}
+                </dd>
+            {% endif %}
+
+
+            <dt>Arkivalietype</dt>
+            {% for hierarchy in resource.get('content_types') %}
+                <dd>
+                {% for item in hierarchy %}
+                    <span>{{item.label}}</span>
+                    {% if not loop.last %}
+                        <span> / </span>
+                    {% endif %}
+                {% endfor %}
+                </dd>
+            {% endfor %}
+
+
+            <dt>Datering</dt>
+            <dd>
+                {% if resource.date_from %}
+                    {% set padding_from = resource.date_from.date|length - 10 %}
+                    {% if padding_from < 0 %}
+                        {% set date_from = resource.date_from.date ~ '-01-01'[padding_from:] %}
+                    {% else %}
+                        {% set date_from = resource.date_from.date %}
+                    {% endif %}
+
+                    {% if resource.date_to %}
+                        {% set padding_to = resource.date_to.date|length - 10 %}
+                        {% if padding_to < 0 %}
+                            {% set date_to = resource.date_to.date ~ '-12-31'[padding_to:] %}
+                        {% else %}
+                            {% set date_to = resource.date_to.date %}
+                        {% endif %}
+
+                        {% if date_to == date_from %}
+                            <span>{{date_from}}</span>
+                        {% elif date_from[0:7] == date_to[0:7] %}
+                            <span>{{date_from[0:7]}}</span>
+                        {% elif date_from[0:4] == date_to[0:4] and (date_from[5:10] == '01-01') %}
+                            <span>{{date_from[0:4]}}</span>
+                        {% elif date_from[5:10] == '01-01' and (date_to[5:10] == '12-31') %}
+                            <span>{{date_from[0:4]}} ~ {{date_to[0:4]}}</span>
+                        {% else %}
+                            <span>{{date_from}} ~ {{date_to}}</span>
+                        {% endif %}
+
+                    {% else %}
+                        <span>{{date_from}} ~</span>
+                    {% endif %}
+
+                {% elif resource.date_to %}
+                    <span>~ {{resource.date_to}}</span>
+
+                {% else %}
+                    <span>Udateret</span>
+                {% endif %}
+            </dd>
+
+            <dt>Copyright</dt>
+            <dd>
+                <p>{{resource.copyright_status.label}}</p>
+            </dd>
+
+            <dt>Tilgængelighed</dt>
+            <dd>
+                <span>{{resource.availability.label}}</span>
+                <!-- <a class="link--filter" href="/records?{{resource.availability.new_link}}">{{resource.availability.label}}</a> -->
+            </dd>
+
+            <dt>Arkivalie ID</dt>
+            <dd>{{resource.id}}</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="resource_section" id="description">
+    <h3>Beskrivelse</h3>
+    <dl class="definitionlist">
+    {% for k in description %}
+        {% set v = resource.get(k) %}
+        {% if v and v|length > 0 %}
+            <div class="media">
+                <dt>{{translate[k]}}</dt>
+                {% if k == 'series' %}
+                    <dd>
+                    {% for e in v %}
+                        <a class="link--filter" href="/search?{{e.new_link}}" alt="Søg med dette filter">{{e.label}}</a>{% if not loop.last %}<span> / </span>{% endif %}
+                    {% endfor %}
+                    </dd>
+                {% elif k == 'subjects' %}
+                    {% for hierarchy in resource.get('subjects') %}
+                        <dd>
+                        {% for item in hierarchy %}
+                            <a class="link--filter" href="/search?{{item.new_link}}">{{item.label}}</a>
+                            {% if not loop.last %}
+                                <span> / </span>
+                            {% endif %}                         
+                        {% endfor %}
+                        </dd>
+                    {% endfor %}
+                {% elif v is string or v is number %}
+                    <dd class="{% if k == 'description' %}textcontent{% endif %}">{{v}}</dd>
+                {% elif k == 'collection_tags' %}
+                    <dd>
+                    {% for e in v %}
+                        {% if e.new_link %}
+                            <a class="link--filter js-collection_tag" href="/search?{{e.new_link}}" alt="Søg med dette filter">{{e.label}}</a>
+                        {% else %}
+                            {{e}}
+                        {% endif %}
+                    {% endfor %}
+                    </dd>
+                {% elif v is mapping %}
+                    {% if v.new_link %}
+                        <dd><a class="link--filter" href="/search?{{v.new_link}}" alt="Søg med dette filter">{{v.label}}</a></dd>
+                    {% else %}
+                        <dd>
+                        {% for key, value in v.items() %}
+                            <span>{{key}}: </span><span>{{value}}</span>
+                        {% endfor %}
+                        </dd>
+                    {% endif %}
+                {% else %}
+                    <dd>
+                    {% for e in v %}
+                        {% if e.new_link %}
+                            <a class="link--filter" href="/search?{{e.new_link}}" alt="Søg med dette filter">{{e.label}}</a>
+                        {% else %}
+                            {{e}}
+                        {% endif %}
+                    {% endfor %}
+                    </dd>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+     </dl>
+</div>
+
+<div class="resource_section" id="entities">
+    <h3>Relationer</h3>
+    <dl class="definitionlist">
+    {% for k in entities %}
+            {% set v = resource.get(k) %}
+            {% if v and v|length > 0 %}
+                <div class="media">
+                    <dt>{{translate[k]}}</dt>
+                    <dd>
+                    {% for e in v %}
+                        {% if e.id %}
+                            <a class="link--filter" href="/{{k}}/{{e.id}}" alt="Vis {{e.label}}">{{e.label}}</a>
+                        {% else %}
+                            {{e}}
+                        {% endif %}
+                    {% endfor %}
+                    </dd>
+                </div>
+            {% endif %}
+    {% endfor %}
+    </dl>
+</div>

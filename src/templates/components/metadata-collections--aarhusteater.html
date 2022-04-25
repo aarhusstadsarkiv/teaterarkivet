@@ -1,0 +1,47 @@
+<div class="resource_section media" id="representation">
+    {% if resource.portrait %}
+        <div class="resource_image media_left">
+            <img src="{{resource.portrait}}">
+        </div>
+    {% endif %}
+
+    <div class="resource_core media_content" id="core">
+        <dl class="definitionlist">
+            {% if resource.display_label and 'display_label' not in site.excluded_keys %}
+                <dt>Samlingsnavn</dt>
+                <dd class="font-weight_bold">{{resource.display_label}}</dd>
+            {% endif %}
+
+            {% if resource.from_date and 'from_date' not in site.excluded_keys %}
+                <dt>Startdato</dt>
+                <dd>{{resource.from_date}}</dd>
+            {% endif %}
+
+            {% if resource.to_date and 'to_date' not in site.excluded_keys %}
+                <dt>Slutdato</dt>
+                <dd>{{resource.to_date}}</dd>
+            {% endif %}
+        </dl>
+    </div>
+</div>
+
+{% if resource.structure and 'structure' not in site.excluded_keys %}
+    <div class="resource_section" id="structure">
+        <h3>Indhold</h3>
+        {# <div id="slinky-menu" class="slinky-menu"> #}
+        <div>
+            <ul>
+                {% for idx in resource.structure recursive %}
+                    <li>
+                        <a href="/search?series={{idx.label}}">{{idx.label}}</a>
+                    {% if idx.children %}
+                        <ul>
+                            {{ loop( idx.children ) }}
+                        </ul>
+                    {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

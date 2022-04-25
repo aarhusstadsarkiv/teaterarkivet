@@ -1,0 +1,49 @@
+/* From http://alistapart.com/article/creating-intrinsic-ratios-for-video
+** 
+*/
+
+.frame--static {
+    position: relative;
+    target-new: tab;
+    display: inline-block;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    @media all and (min-width:65em) {
+        display: none;
+    }
+}
+
+// Iframe/Embed-wrapper
+%frame_wrapper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+}
+
+// Vieo-embed
+.frame_wrapper--video {
+    @extend %frame_wrapper;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+// Pdf-embed
+.frame_wrapper--pdf {
+    @extend %frame_wrapper;
+    height: 0;
+    padding-bottom: 112.50%;
+    display: none;
+    @media all and (min-width:65em) {
+        display: block;
+    }
+}
+
+.frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

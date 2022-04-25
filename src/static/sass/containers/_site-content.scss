@@ -1,0 +1,31 @@
+/*
+*/
+
+%site-content {
+	// padding-top: $headerHeight;
+	height: 100%;
+	min-height: 100%;
+}
+
+.js .site-content--default {
+	@extend %site-content !optional;
+
+	@media all and (min-width:45em) {
+		padding-top: 0;
+		margin-left: 18em;
+	}
+}
+
+.js .site-content--homepage {
+	@extend %site-content !optional;
+	max-width: $maxWidthGlobal;
+	margin: 0 auto;
+}
+
+// One column without sidebar; therefore able to use margin: 0 auto
+.no-js .site-content--default,
+.no-js .site-content--homepage {
+	@extend %site-content !optional;
+	max-width: $maxWidthColumn;
+	margin: 0 auto;
+}

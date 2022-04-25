@@ -1,0 +1,19 @@
+// Creates a box-shadowed, linked image with a bottom-overlay
+
+.image--linked {
+    position: relative;
+    target-new: tab;
+    display: inline-block;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+}
+
+.image_title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    padding: $paddingMedium;
+}

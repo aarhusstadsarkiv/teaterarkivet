@@ -1,0 +1,41 @@
+// http://blog.cloudfour.com/styling-form-elements/
+// http://filamentgroup.github.io/checkboxradio/
+
+$_bgColor: white;
+$_color: darken(black, 20%);
+
+// hover- and click-wrapper for radiobutton, icon and text
+.radio_label {
+	display: block;
+  	cursor: pointer;
+  	&:hover {
+  		background-color: darken($_bgColor, 10%);
+  	}
+}
+
+.radio_text {
+	position: relative;
+	display: inline-block;
+	line-height: 2.4em;
+}
+
+/* move left to make room for the icon */
+.js .radio_text {
+	padding-left: 2em;
+	&::after {
+		position: absolute;
+		left: 0;
+	}
+}
+
+/* hide the "real" radios visually on .js */
+.js .radio_input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	border: 0;
+	clip: rect(0 0 0 0);
+	overflow: hidden;
+}

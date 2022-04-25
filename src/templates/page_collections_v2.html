@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% set domain = "collectionspage" %}
+{% set title = "Søgeresultat" %}
+
+{% block page_header %}
+	{% if filters %}
+		{% include 'components/filters_v2.html' %}
+	{% endif %}
+
+	{% if result %}
+		<div class="page-header media">
+        	<div class="dropdown media_right">
+				{% if (previous or next) and size_list %}
+	        		<a class="link dropdown_trigger pre-icon icon_settings">Antal</a>
+    	    		<ul class="dropdown_list--right width_15">
+	    	    		<li class="menu_heading">Antal visninger per side</li>
+	        	    	{% for e in size_list %}
+	            			{% if e.selected %}
+	            				<li><span class="menu_text">{{e.label}}</span></li>
+	            			{% else %}
+	            				<li><a class="menu_link" href="/search?{{e.link}}">{{e.label}}</a></li>
+	            			{% endif %}
+						{% endfor %}
+        			</ul>
+        		{% endif %}
+        	</div>
+			<div class="media_content">
+				<ul>
+				{% if previous %}
+					<li class="list-item--horizontal">
+						<a class="link pad-left_zero pre-icon--large icon_arrow--left" href="/search?{{previous}}" title="Tilbage til forrige resultater">Forrige</a>
+					</li>
+				{% else %}
+					<li class="list-item--horizontal link--disabled pre-icon--large icon_arrow--left">Forrige</li>
+				{% endif %}
+				{% if next %}
+					<li class="list-item--horizontal pad-left_small">
+                        <a class="link pad-left_zero post-icon--large icon_arrow--right" href="/search?{{next}}" title="Hent flere resultater">Næste</a>
+					</li>
+				{% else %}
+					<li class="list-item--horizontal link--disabled pad-left_small post-icon--large icon_arrow--right">Næste</li>
+				{% endif %}
+				</ul>
+			</div>
+		</div>
+	{% endif %}
+{% endblock page_header %}
+
+{% block page_content %}
+	<div class="page-content">
+	{% if result %}
+		{% for resource in result %}
+			{% include "components/listitem_records--aarhusteater_v2.html" %}
+		{% endfor %}
+	{% else %}
+		<div>
+			<h3>Intet resultat</h3>
+			<p>Ingen materialer matcher dine søgefiltre!</p>
+			<p>Fjern et filter eller forsøg med en helt ny søgning.</p>
+		</div>
+	{% endif %}
+	</div>
+{% endblock page_content %}
+
+{% block page_footer %}
+	{% if result %}
+		<footer class="page-footer media">
+			<div class="media_right">
+				<a class="link link--tothetop pre-icon--large icon_arrow--up" href="#" title="Til toppen af siden">Til toppen</a>
+			</div>
+			<div class="media_content">
+				{% if previous or next %}
+					<ul>
+					{% if previous %}
+                    <li class="list-item--horizontal">
+                            <a class="link pad-left_zero pre-icon--large icon_arrow--left" href="/search?{{previous}}" title="Tilbage til forrige resultater">Forrige</a>
+                        </li>
+					{% else %}
+						<li class="list-item--horizontal link--disabled pre-icon--large icon_arrow--left">Forrige</li>
+					{% endif %}
+					{% if next %}
+					    <li class="list-item--horizontal pad-left_small">
+                            <a class="link pad-left_zero post-icon--large icon_arrow--right" href="/search?{{next}}" title="Hent flere resultater">Næste</a>
+                        </li>
+					{% else %}
+						<li class="list-item--horizontal link--disabled pad-left_small post-icon--large icon_arrow--right">Næste</li>
+					{% endif %}
+					</ul>
+				{% endif %}
+			</div>
+		</footer>
+	{% endif %}
+{% endblock page_footer %}

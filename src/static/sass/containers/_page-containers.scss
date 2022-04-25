@@ -1,0 +1,70 @@
+/*
+*/
+
+.page-wrapper {
+	max-width: 65em;
+    margin: 0 auto;
+    margin-bottom: -$footerHeight * 1.6;
+    min-height: 100%;
+    &::after {
+        content: "";
+        display: block;
+        height: $footerHeight * 1.6;
+    }
+}
+
+@media screen and (min-width: 55em) {
+    .page-wrapper {
+        margin-bottom: -$footerHeight;
+        &::after {
+            height: $footerHeight;
+        }
+    }
+}
+
+.page-content {
+    padding-bottom: $paddingLarge;
+    padding-right: $paddingSmall;
+    padding-left: $paddingSmall;
+
+    @media screen and (min-width: 21em) {
+        padding-right: $paddingMedium;
+        padding-left: $paddingMedium;
+    }
+    @media screen and (min-width: 45em) {
+        padding-right: $paddingLarge;
+        padding-left: $paddingLarge;
+    }
+    @media screen and (min-width: 85em) {
+        padding-right:0;
+        padding-left:0;
+    }
+}
+
+.page-header {
+    line-height: $headerHeight;
+    padding-right: $paddingSmall;
+    padding-left: $paddingSmall;
+
+    @media screen and (min-width: 21em) {
+        padding-right: $paddingMedium;
+        padding-left: $paddingMedium;
+    }
+    @media screen and (min-width: 45em) {
+        padding-right: $paddingLarge;
+        padding-left: $paddingLarge;
+    }
+    @media screen and (min-width: 85em) {
+        padding-right:0;
+        padding-left:0;
+    }
+}
+// .page-header,
+.page-footer {
+    line-height: $headerHeight;
+    padding-left: .2em; // icon has .4em on its own
+    padding-right: $paddingMedium;
+}
+.page-footer {
+    margin-bottom: 1em;
+}

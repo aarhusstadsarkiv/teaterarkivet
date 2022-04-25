@@ -1,0 +1,27 @@
+
+{% if not resource %}
+    <p>No resource</p>
+{% endif %}
+
+{% if collection %}
+    <p>Collection: {{collection}}</p>
+{% endif %}
+
+{% if status_code %}
+    <p>Status_code: {{status_code}}</p>
+{% endif %}
+
+
+{% if result %}
+    <p>Result: {{result}}</p>
+{% endif %}
+
+{% if id %}
+    <p>Id: {{id}}</p>
+{% endif %}
+<dl>
+{% for k, v in resource.items() %}
+    <dt>{{k}}</dt>
+    <dd>{{v}}</dd>
+{% endfor %}
+</dl>

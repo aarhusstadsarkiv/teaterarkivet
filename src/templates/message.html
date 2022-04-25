@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% set domain = "applicationpage" %}
+{% set title = "Besked" %}
+
+{% block page_complementary %}
+    <div class="complementary--default dropdown" role="complementary">
+        <ul></ul>
+    </div>
+{% endblock page_complementary %}
+
+{% block page_header %}
+    <div class="page-header pad-left_medium">
+        <h3>Besked</h3>
+    </div>
+{% endblock page_header %}
+
+{% block page_content %}
+	<div class="page-content">
+		<p>{{message}}</p>
+	</div>
+{% endblock page_content %}

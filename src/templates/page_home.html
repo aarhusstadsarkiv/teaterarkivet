@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% set domain = "homepage" %}
+{% set title = "Forside" %}
+
+{% block page_content %}
+	<a class="homepage_search-link" href="#site-search">Indtast søgeord...<span class="float_right pre-icon icon_search"></span></a>
+	<div class="homepage_text">
+		<span class="homepage_header_lead">Velkommen til </span>
+		<span class="homepage_header">AARHUS TEATER ARKIV</span>
+		<p>Her kan du gå på opdagelse i Aarhus Teaters historie fra år 1900 til nu.</p>
+		<p class="homepage_subheader" style="padding-top:1.5em;">Find oplysninger om og billeder af:</p>
+		<ul class="homepage_subheader" style="padding:.5em 0 1.5em;font-size:.9em;">
+			<li>Forestillinger</li>
+			<li>Skuespillere og andet personale</li>
+			<li>Sæsoner</li>
+		</ul>
+		<!-- <a href="/about" style="display:block;color:white;text-decoration:underline;">Om arkivet</a> -->
+		<a class="homepage_subheader" href="/how-to-search" style="color:white;text-decoration:underline;">Sådan søger du</a>
+	</div>
+	<img class="homepage_logo" src="static/images/ugle_hvid_png24.png" alt="logo">
+{% endblock page_content %}

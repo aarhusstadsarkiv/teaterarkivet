@@ -1,0 +1,291 @@
+// Technique from: https://css-tricks.com/html-for-icon-font-usage/
+// and: http://chipcullen.com/using-icons-from-icon-fonts-directly-in-css/
+
+// Rules fetched from: http://google.github.io/material-design-icons/
+// Plus some from: http://tympanus.net/Development/MultiLevelPushMenu/index.html
+
+
+%icon-temp {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	display: inline-block;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+    text-align: center;
+    font-variant: normal;
+    speak: none;
+    font-size: inherit;
+    padding: 0;
+
+    /* Necessary to avoid pushing text down */
+    vertical-align: bottom;
+
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}
+
+.pre-icon::before {
+    @extend %icon-temp;
+    padding-right: $paddingSmall;
+}
+
+.pure-icon::before {
+    @extend %icon-temp;
+    padding: 0 $paddingSmall;
+}
+
+.post-icon::after {
+    @extend %icon-temp;
+    padding-left: $paddingSmall;
+    /* TESTING */
+    // float: right;
+}
+
+.pre-icon--large::before {
+    @extend .pre-icon;
+    font-size: 150%;
+    // line-height: $headerHeight * 0.66;
+    padding: 0;
+}
+
+.pure-icon--large::before {
+    @extend .pure-icon;
+    font-size: 150%;
+    // line-height: $headerHeight * 0.66;
+}
+
+.post-icon--large::after {
+    @extend .post-icon;
+    font-size: 150%;
+    // line-height: $headerHeight * 0.66;
+    padding: 0;
+}
+
+/* ICONS */
+.pre-icon.icon_error::before,
+.post-icon.icon_error::after {
+    content: "\e001";
+}
+.pre-icon.icon_edit::before,
+.post-icon.icon_edit::after {
+    content: "\e254";
+}
+.pre-icon.icon_suggestion::before,
+.post-icon.icon_suggestion::after {
+    content: "\e7F7";
+}
+.pre-icon.icon_order::before,
+.post-icon.icon_order::after {
+    content: "\e8CC";
+}
+.pre-icon.icon_subdir::before,
+.post-icon.icon_subdir::after {
+    content: "\e5DA";
+}
+.pre-icon.icon_code::before,
+.post-icon.icon_code::after {
+    content: "\e86F";
+}
+.pre-icon.icon_eye::before,
+.pure-icon.icon_eye::before,
+.pure-icon--large.icon_eye::before,
+.post-icon.icon_eye::after {
+    content: "\e8F4";
+}
+.pre-icon.icon_4-lines::before,
+.post-icon.icon_4-lines::after {
+    content: "\e8EE";
+}
+.pre-icon.icon_notepad::before,
+.post-icon.icon_notepad::after {
+    content: "\e85D";
+}
+.pre-icon.icon_close::before,
+.pure-icon.icon_close::before,
+.pure-icon--large.icon_close::before,
+.post-icon.icon_close::after {
+    content: "\e5CD";
+}
+.pre-icon.icon_telephone::before,
+.post-icon.icon_telephone::after {
+    content: "\e0CD";
+}
+.pre-icon.icon_description::before,
+.post-icon.icon_description::after {
+    content: "\e8EE";
+}
+.pre-icon.icon_institution::before,
+.post-icon.icon_institution::after {
+    content: "\e84F";
+}
+.pre-icon.icon_search::before,
+.pure-icon--large.icon_search::before,
+.post-icon.icon_search::after {
+    content: "\e8B6";
+}
+.pre-icon.icon_bookmark::before,
+.post-icon.icon_bookmark::after {
+    content: "\e867";
+}
+.pre-icon.icon_bookmark--solid::before,
+.post-icon.icon_bookmark--solid::after {
+    content: "\e866";
+}
+.pre-icon.icon_delete::before,
+.post-icon.icon_delete::after {
+    content: "\e872";
+}
+.pre-icon.icon_event::before,
+.post-icon.icon_event::after {
+    content: "\e878";
+}
+.pre-icon.icon_home::before,
+.post-icon.icon_home::after {
+    content: "\e88A";
+}
+.pre-icon.icon_label::before,
+.post-icon.icon_label::after {
+    content: "\e893";
+}
+.pre-icon.icon_label--solid::before,
+.post-icon.icon_label--solid::after {
+    content: "\e892";
+}
+.pre-icon.icon_lock::before,
+.post-icon.icon_lock::after {
+    content: "\e899";
+}
+.pre-icon.icon_lock--solid::before,
+.post-icon.icon_lock--solid::after {
+    content: "\e897";
+}
+.pre-icon.icon_pin::before,
+.post-icon.icon_pin::after {
+    content: "\e8B4";
+}
+.pre-icon.icon_settings::before,
+.post-icon.icon_settings::after {
+    content: "\e8B8";
+}
+.pre-icon.icon_list::before,
+.post-icon.icon_list::after {
+    content: "\e896";
+}
+.pre-icon.icon_envelope::before,
+.post-icon.icon_envelope::after {
+    content: "\e0E1";
+}
+.pre-icon.icon_subject::before,
+.post-icon.icon_subject::after {
+    content: "\e8D2";
+}
+.pre-icon.icon_organisation::before,
+.post-icon.icon_organisation::after {
+    content: "\e0AF";
+}
+.pre-icon.icon_menu::before,
+.pure-icon--large.icon_menu::before,
+.post-icon.icon_menu::after {
+    content: "\e5D2";
+}
+.pre-icon.icon_person::before,
+.post-icon.icon_person::after {
+    content: "\e7FF";
+}
+.pre-icon.icon_person--solid::before,
+.post-icon.icon_person--solid::after {
+    content: "\e7FD";
+}
+.pre-icon.icon_folder::before,
+.post-icon.icon_folder::after {
+    content: "\e2C8";
+}
+.pre-icon.icon_folder--solid::before,
+.post-icon.icon_folder--solid::after {
+    content: "\e2C7";
+}
+.pre-icon.icon_check::before,
+.post-icon.icon_check::after {
+    content: "\e5CA";
+}
+.pre-icon.icon_arrow--up::before,
+.post-icon.icon_arrow--up::after {
+    content: "\e316";
+}
+.pre-icon.icon_arrow--down::before,
+.post-icon.icon_arrow--down::after {
+    content: "\e313";
+}
+.pre-icon.icon_arrow--left::before,
+.post-icon.icon_arrow--left::after {
+    content: "\e314";
+}
+.pre-icon.icon_arrow--right::before,
+.post-icon.icon_arrow--right::after {
+    content: "\e315";
+}
+.pre-icon.icon_collection::before,
+.post-icon.icon_collection::after {
+    content: "\e02F";
+}
+.pre-icon.icon_creator::before,
+.post-icon.icon_creator::after {
+    content: "\e02C";
+}
+.pre-icon.icon_series::before,
+.post-icon.icon_series::after {
+    content: "\e164";
+}
+.pre-icon.icon_record::before,
+.post-icon.icon_record::after {
+    content: "\e873";
+}
+.pre-icon.icon_checked::before,
+.post-icon.icon_checked::after {
+    content: "\e5CA";
+}
+.pre-icon.icon_image::before,
+.post-icon.icon_image::after {
+    content: "\e3F4";
+}
+.pre-icon.icon_text::before,
+.post-icon.icon_text::after {
+    content: "\e873";
+}
+.pre-icon.icon_sound::before,
+.post-icon.icon_sound::after {
+    content: "\e405";
+}
+.pre-icon.icon_film::before,
+.post-icon.icon_film::after {
+    content: "\e04B";
+}
+.pre-icon.icon_dataset::before,
+.post-icon.icon_dataset::after {
+    content: "\e8EC";
+}
+.pre-icon.icon_license::before,
+.post-icon.icon_license::after {
+    content: "\e90C";
+}
+.pre-icon.icon_display::before,
+.post-icon.icon_display::after {
+    content: "\e30C";
+}
+.pre-icon.icon_add::before,
+.post-icon.icon_add::after {
+    content: "\e145";
+}

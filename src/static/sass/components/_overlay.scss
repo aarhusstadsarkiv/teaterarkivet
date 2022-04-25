@@ -1,0 +1,30 @@
+/* .site-header and .site-complementary.open have a z-index of 10 */ 
+%overlay {
+	visibility: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 200ms;
+}
+.overlay--10 {
+	@extend %overlay;
+	z-index: 10;
+	background-color: $bg-color--dark; // rgba(77,97,115,0.2);
+}
+
+/* For dropdown-lists */
+.overlay--20 {
+	@extend %overlay;
+	z-index: 20;
+	background-color: transparent;	
+}
+
+.overlayed--10 .overlay--10,
+.overlayed--20 .overlay--20 {
+	visibility: visible;
+	opacity: .2;
+	transition: opacity 200ms;
+}

@@ -1,0 +1,106 @@
+/* Utility-rules obey these guidelines:
+** .selectorname_value
+** 1) Use hyphen when css-selector uses hyphen
+** 2) Use underscore to seperate selector and value
+** 3) Use original value-names OR non-legal names that refer to variables
+*/
+
+/*
+** DISPLAY
+*/
+.display_block { display: block !important; }
+.display_inline-block { display: inline-block !important; }
+.display_none { display: none !important; }
+
+/*
+** POSITION
+*/
+.pos_relative { position: relative !important; }
+.pos_absolute { position: absolute !important; }
+// .pos_fixed {position: fixed !important; }
+
+
+/*
+** PLACEMENT
+*/
+.top { top: 0 !important; }
+.bottom { bottom: 0 !important; }
+.left { left: 0 !important; }
+.right { right: 0 !important; }
+
+/*
+** FLOAT & CLEAR
+*/
+.float_left { float: left !important; }
+.float_right { float: right !important; }
+.float_none { float: none !important; }
+.clear_left { clear: left !important; }
+.clear_right { clear: right !important; }
+.clear_both { clear: both !important; }
+
+/*
+** SIZE
+*/
+.width_10 { width: 10em !important; }
+.width_15 { width: 15em !important; }
+.width_20 { width: 20em !important; }
+.width_25 { width: 25em !important; }
+.width_full { width: 100% !important; }
+.height_full { height: 100% !important; }
+
+/*
+** PADDING
+*/
+.pad-top_small { padding-top: $paddingSmall !important; }
+.pad-top_medium { padding-top: $paddingMedium !important; }
+.pad-top_large { padding-top: $paddingLarge !important; }
+
+.pad-bottom_small { padding-bottom: $paddingSmall !important; }
+.pad-bottom_medium { padding-bottom: $paddingMedium !important; }
+.pad-bottom_large { padding-bottom: $paddingLarge !important; }
+
+.pad-right_small { padding-right: $paddingSmall !important; }
+.pad-right_medium { padding-right: $paddingMedium !important; }
+.pad-right_large { padding-right: $paddingLarge !important; }
+
+.pad-left_small { padding-left: $paddingSmall !important; }
+.pad-left_medium { padding-left: $paddingMedium !important; }
+.pad-left_large { padding-left: $paddingLarge !important; }
+
+.pad-horizontal_small { padding: 0 $paddingSmall !important; }
+.pad-horizontal_medium { padding: 0 $paddingMedium !important; }
+.pad-horizontal_large { padding: 0 $paddingLarge !important; }
+
+.pad-vertical_small { padding: $paddingSmall 0 !important; }
+.pad-vertical_medium { padding: $paddingMedium 0 !important; }
+.pad-vertical_large { padding: $paddingLarge 0 !important; }
+
+.pad_small { padding: $paddingSmall !important; }
+.pad_medium { padding: $paddingMedium !important; }
+.pad_large { padding: $paddingLarge !important; }
+
+/*
+** CURSOR
+*/
+.cursor_pointer { cursor: pointer !important; }
+
+/*
+** COLOR
+*/
+.col_white { color: white !important; }
+.col_light { color: darken(white, 5%) !important; }
+
+
+/*
+** FONT
+*/
+.font-weight_bold { font-weight: bold !important; }
+/*
+** BOX-SHADOW
+*/
+// .box-shadow_medium { box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.6); }
+
+/*
+** TEXT-ALIGN
+*/
+.text-align_center { text-align: center !important; }

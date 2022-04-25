@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% set domain = "applicationpage" %}
+{% set title = "Log ind" %}
+
+{% block page_complementary %}
+    <div class="complementary--default dropdown" role="complementary">
+        <ul></ul>
+    </div>
+{% endblock page_complementary %}
+
+{% block page_header %}
+    <div class="page-header pad-left_medium">
+        <h3>{{title}}</h3>
+    </div>
+{% endblock page_header %}
+
+{% block page_content %}
+<div class="page-content">
+	{% if already %}
+		<div>
+			<p>Du er allerede logget ind. Endnu engang velkommen!</p>
+		</div>
+	{% else %}
+		{% if failed %}
+			<div>
+		    	<p>Login fejlede! Prøv igen.</p>
+		    </div>
+		{% endif %}
+		<form class="form" method="POST">
+			{% if return %}
+				<input type="hidden" name="return_url" value="{{return}}">
+			{% endif %}
+            <div class="element">
+    			<label for="email">Email</label>
+	       		<input type="text" value="{% if email %}{{email}}{% endif %}" name="email"/>
+			</div>
+            <div class="element"> 
+                <label for="password">Kodeord</label>
+                <input type="password" name="password"/>
+            </div>
+			<button type="submit">Login</button>
+		</form>
+	{% endif %}
+</div>
+{% endblock page_content %}

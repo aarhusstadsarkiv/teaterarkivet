@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% set domain = "cookiepage" %}
+{% set title = "Cookies" %}
+
+{% block page_complementary %}
+    <div class="complementary--default dropdown" role="complementary">
+    <ul></ul>
+    </div>
+{% endblock page_complementary %}
+
+{% block page_header %}
+	<div class="page-header pad-left_medium">
+		<h3>Cookie-politik</h3>
+	</div>
+{% endblock page_header %}
+
+{% block page_content %}
+	<div class="page-content">
+		<p>Vi bruger cookies til at udtrække besøgsstatistik omkring brugen af hjemmesiden. Vi benytter <a href="https://www.google.com/analytics/standard" title="Læs mere om Google Analytics her">Google Analytics</a>.</p>
+	</div>
+{% endblock page_content %}

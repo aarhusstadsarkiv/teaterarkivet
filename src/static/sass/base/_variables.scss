@@ -1,0 +1,88 @@
+/* ALL VARIABLES MUST BE OVERRIDABLE - APPEND !DEFAULT
+** USE ORIGINAL SELECTOR-NAMES WHEN POSSIBLE
+**
+*/
+
+/* PADDING */
+$paddingSmall: .4em !default;
+$paddingMedium: .7em !default;
+$paddingLarge: 1em !default;
+
+/* BORDER */
+$border-radius: 2px !default;
+
+/* IMAGES */
+// $bg-image: url("/static/images/1920x1200.jpg");
+$bg-image: linear-gradient(
+                rgba(70, 98, 127, 0.3),
+                rgba(70, 98, 127, 0.3) ),
+				// url("/static/images/bg_l.jpg") !default;
+				url("/static/images/frontpage_1920x1200 copy.jpg") !default;
+
+/* BOX-SHADOW */
+$box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2) !default; // 0 10px 10px 0 rgba(0, 0, 0, 0.6) !default;
+$box-shadow--bottom: 0 5px 5px -5px rgba(0, 0, 0, 0.6) !default;
+
+/* WIDTH */
+$maxWidthGlobal: 65em !default;
+$maxWidthColumn: 45em !default;
+$widthComplementary: 18em !default;
+
+/* FONT */
+$font-family: "Helvetica Neue", Helvetica, sans-serif !default;
+$font-family--light: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, sans-serif !default;
+$font-weight: normal !default;
+$font-size: 16px;
+$line-height: 1.4;
+
+/* COLOR */
+$color: #424242 !default;
+$color--light: darken(white, 5%) !default;
+$color--dark: #B71A39 !default;
+$bg-color: white !default;
+$bg-color--dark: #B71A39 !default;
+$basecolor: #FFF !default;
+
+/* LINKS */
+$link-bottom-border: 2px solid #c00 !default; // 2px solid #0B6BCC !default;
+$link-color: #c00 !default; // #0B6BCC !default;
+$linkcolor: lighten($bg-color, 20%) !default;
+
+/* DIVERSE */
+$headerHeight: 3em !default;
+$thumbHeight: 2.4em !default;
+$footerHeight: 11em;
+
+// $level1: #f9fafb !default;
+// $level2: #eaedf1 !default;
+// $level3: #dae1e7 !default;
+// $level4: #cbd4dc !default;
+// $level5: #bcc7d2 !default;
+// $level6: #adbbc7 !default;
+// $level7: #9daebd !default;
+// $level8: #8ea1b3 !default;
+// $level9: #7f94a9 !default;
+// $level10: #70889e !default;
+// $level11: #627b92 !default;
+// $level12: #586e83 !default;
+// $level13: #4d6173 !default;
+// $level14: #435464 !default;
+// $level15: #394755 !default;
+
+// $lightestlink: #2095f2 !default;
+// $lighterlink: #0e89ea !default;
+// $lightlink: #0c7bd2 !default;
+// $linkcolor: #0B6DBA !default;
+// $darklink: #0a5fa2 !default;
+// $darkerlink: #08518a !default;
+// $darkestlink: #074372 !default;
+
+
+/* ANIMATION */
+$duration: 250ms !default;
+$ease: ease-in-out !default;
+
+// USE layout-wrappers around actual components to avoid baking stuff like margin-right:18px or float:left
+// into the component!
+// Place the layout-wrapper rules in the same file as the component, hm! OR use utility-classes, better
+// Utility-classes should be: margin, padding, position, size, maybe color...

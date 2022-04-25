@@ -1,0 +1,13 @@
+{# Global searchbox  - including overlaying options/hint-box #}
+<form class="autocomplete" action="/records">
+    <div class="search_wrapper">
+        <input class="typeahead search_input_v2" name="q" type="text" autocomplete="off" placeholder="Indtast søgeord...">
+        {# infobox that displays its p's according to the response from typeahead #}
+        <div class="search_help">
+            <p class="search_help--js-no-items">Der var ingen entiteter, der matchede dit input. Vælg et andet søgeord eller udforsk arkivet ved at sætte et søgefilter.</p>
+            <p class="search_help--js-choose-item">Du skal vælge en af de muligheder, der oplistes. Brug touch, mus eller piletaster til at vælge med.</p>
+            <p class="search_help--js-no-input">Indtast minimum 2 karakterer inden søgning.</p>
+        </div>
+
+    </div>
+</form> 

@@ -1,0 +1,29 @@
+{# To be placed inside <div class="complementary_inner"> in base.html  #}
+
+<div class="list_heading col_light">Søgefiltre</div>
+<div id="slinky-menu" class="slinky-menu">
+	<ul>
+		{% for facet_name, facet in facets.items() %}
+			{% if facet_name == 'Forestillinger' %}
+				<li>
+					<a>{{facet_name}}</a>
+					<ul>
+					{% for item in facet recursive %}
+			            <li>
+		            	{% if item.children %}
+		                	<a>{{item.display_label}}</a>
+			                <ul>
+			                    {{ loop( item.children ) }}
+			                </ul>
+			            {% else %}
+			                {# <a href="/records?series={{item.display_label}}">{{item.display_label}}</a> #}
+			                <a href="/events/{{item.id}}">{{item.display_label}}</a>
+			            {% endif %}
+			            </li>
+					{% endfor %}
+					</ul>
+				</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+</div>

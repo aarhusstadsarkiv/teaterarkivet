@@ -1,0 +1,68 @@
+<div class="form-container">
+    <form id="form" method="POST" accept-charset="UTF-8">
+
+        {% for key, values in resource.properties.items() recursive %}
+
+        	{% if values._value %}
+        		{% set val = values._value %}
+        	{% else %}
+        		{% set val = '' %}
+        	{% endif %}
+
+            {% if key in resource.required %}
+                {% set required = true %}
+            {% else %}
+                {% set required = false %}
+            {% endif %}
+
+        	{% if key in resource._meta.systemProperties %}
+    			<input type="hidden" name="{{key}}" {% if val %} value="{{val}}" {% endif %} {% if required %} required {% endif %}>
+
+    		{% else %}
+    	        {% if values.type == "object" %}
+    	        	<div class="clearfix object-container">
+    	        		<p class="object-title">{{values.title}}</p>
+    	        		{{ loop( values.properties.items() ) }}
+    	        	</div>
+    	        {% else %}
+    		        <div class="clearfix">
+    		            <label for="{{key}}">{{values.title}}</label>
+    		            {% if values.enum %}
+    		                <select name="{{key}}" title="{{values.description}}" {% if required %} required {% endif %}>
+    		                    {% for index in values.enum %}
+    		                    <option value="{{index}}" {% if val and (val == index) %} selected {% endif %}>{{index}}</option>
+    		                    {% endfor %}
+    		                </select>
+    		            {% elif values.type == "array" %}
+                            {# ONLY WORKS WITH ARRAY OF STRINGS #}
+    		                {% if val %}
+    		                    {% for index in val %}
+    		                    <div class="">
+    		                        <input type="text" name="{{key}}" class="repeatable" value="{{index}}" title="{{values.title}}" autocomplete="off"/>
+    		                        <button type="button" class="{% if loop.first %} add-element {% else %} remove-element {% endif %} button switch">{% if loop.first %} + {% else %} - {% endif %}</button>
+    		                    </div>
+    		                    {% endfor %}
+    		                {% else %}
+    		                    <div class="">
+    		                        <input type="text" name="{{key}}" class="" value="{{index}}" title="{{values.title}}" autocomplete="off"/>
+    		                        <button type="button" class="add-element button switch">+</button>
+    		                    </div>
+    		                {% endif %}
+    		            {% elif values.type == "string" and values.maxLength == 5000 %}
+    		                <textarea name="{{key}}" title="{{values.description}}" {% if required %} required {% endif %}>{% if val %}{{val}}{% endif %}</textarea>
+    		            {% elif values.type == "string" %}
+    		            	<input type="text" name="{{key}}" class="" {% if val %} value="{{val}}" {% endif %} title="{{values.title}}" {% if values.pattern %} pattern="{{values.pattern}}" {% endif %} {% if required %} required {% endif %} autocomplete="off"/>
+                        {% elif values.type == "boolean" %}
+                            <input type="checkbox" name="{{key}}" {% if val and val == true %} checked {% endif %}>
+    		            {% endif %}
+    		        </div>
+    		    {% endif %}
+    		{% endif %}
+
+        {% endfor %}
+
+        <div class="clearfix">
+            <button type="submit" class="">Gem</button>
+        </div>
+    </form>
+</div>

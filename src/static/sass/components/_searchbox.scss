@@ -1,0 +1,59 @@
+.search_wrapper {
+	@extend .clearfix;
+	position: relative;
+	margin: 0 .4em;
+	background-color: white;
+}
+
+// Placed between the two floated .search_icons
+.search_input {
+	border: none;
+	margin: 0 auto;
+	width: 100%;
+
+}
+
+.search_input_v2 {
+	border: none;
+	text-indent: 0.4em;
+	width: 100%;
+	// margin-right: 5em;
+}
+
+// Containers for icons_***::before
+.search_icon {
+	color: darken($bg-color--dark, 10%);
+	padding: 0 .4em;
+	line-height: 2.5em;
+}
+
+// Icon for auto_type
+.no-js .search_icon:first-child {
+	display: none;
+}
+
+.js .search_options,
+.search_help {
+	display: none;
+	position: absolute;
+	top: 3em;
+	background-color: white;
+	width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.no-js .search_options {
+	display: block;
+	border-top: .5em solid lighten($bg_color, 10%);
+}
+
+.search_help--js-no-items,
+.search_help--js-choose-item,
+.search_help--js-no-input {
+	display: none;
+}
+
+.no-js .search_input:focus ~ .search_help {
+	display: block;
+}

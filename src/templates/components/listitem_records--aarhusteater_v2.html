@@ -1,0 +1,62 @@
+{# Single listitem containing a record #}
+
+<div class="media listitem">
+	{% if resource.thumbnail %}
+		<div class="media_left">
+			<div class="listitem_image" style="background-image:url({{resource.thumbnail}})">
+				<a class="link--block" href="/records/{{resource.id}}">
+			</div>
+		</div>
+	{% endif %}
+
+	<div class="media_content">
+		<a class="link" href="/records/{{resource.id}}">
+			{% if resource.label %}
+				<p class="listitem_title">{{resource.label|truncate(200)}}</p>
+			{% endif %}
+			{% if resource.summary %}
+				<span class="listitem_subtitle">{{resource.summary|truncate(150)}}</span>
+			{% endif %}
+			{% if not (resource.label or resource.summary) %}
+				{% if resource.desc_notes %}
+					<span class="listitem_subtitle">{{resource.desc_notes|truncate(300)}}</span>
+				{% else %}
+					<span class="listitem_subtitle">Materialet er ikke beskrevet</span>
+				{% endif %}
+			{% endif %}
+		</a>
+
+		<div class="listitem_type">
+			<span class="pre-icon icon_image">{% if "45" in resource.content_types %}Program{% else %}Billede{% endif %}</span>
+		</div>
+
+		<p class="listitem_date">
+			{% if resource.date_from %}
+				{% if resource.date_to %}
+					{% if resource.date_to == resource.date_from %}
+						<span>{{resource.date_from[0:4]}}-{{resource.date_from[4:6]}}-{{resource.date_from[6:8]}}</span>
+					{% elif resource.date_from[0:6] == resource.date_to[0:6] %}
+						<span>{{resource.date_from[0:4]}}-{{resource.date_from[4:6]}}</span>
+					{% elif resource.date_from[0:4] == resource.date_to[0:4] and resource.date_from[4:8] == '0101' %}
+						<span>{{resource.date_from[0:4]}}</span>
+					{% elif resource.date_from[4:8] == '0101' and resource.date_to[4:8] == '1231' %}
+						<span>{{resource.date_from[0:4]}} ~ {{resource.date_to[0:4]}}</span>
+					{% else %}
+						<span>{{resource.date_from[0:4]}}-{{resource.date_from[4:6]}}-{{resource.date_from[6:8]}} ~ {{resource.date_to[0:4]}}-{{resource.date_to[4:6]}}-{{resource.date_to[6:8]}}</span>
+					{% endif %}
+				{% else %}
+					<span>{{resource.date_from[0:4]}}-{{resource.date_from[4:6]}}-{{resource.date_from[6:8]}} ~</span>
+				{% endif %}
+			{% elif resource.date_to %}
+				<span>~ {{resource.date_to[0:4]}}-{{resource.date_to[4:6]}}-{{resource.date_to[6:8]}}</span>
+			{% else %}
+				<span>Uden datering</span>
+			{% endif %}
+		</p>
+
+		{% if resource.collectors_label %}
+			<p class="listitem_series pre-icon icon_collection">{{resource.collectors_label}}</p>
+		{% endif %}
+	</div>
+
+</div>

@@ -1,0 +1,25 @@
+// Overrides or additions to default cookies-theme
+// https://silktide.com/tools/cookie-consent/docs/
+
+.cc_container {
+	opacity: 0.7 !important;
+
+	.cc_more_info {
+	    color: #31a8f0 !important;
+	    &:hover {
+	    	color: lighten(#31a8f0, 10%) !important;
+	    }
+	}
+
+	.cc_btn,
+	.cc_btn:visited {
+	    color: #000 !important;
+	    background-color: #f1d600 !important;
+	}
+
+	.cc-btn:hover,
+	.cc-btn:active {
+	    background-color: #fff !important;
+    	color: #000 !important;
+	}
+}
