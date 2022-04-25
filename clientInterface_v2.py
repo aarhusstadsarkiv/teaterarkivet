@@ -14,7 +14,7 @@ class Client():
         self.facets = config.get("facets")
         self.filters = config.get("filters")
         self.default_params = config.get("default_query_params")
-        self.service = serviceInterface_v2.Service("aar-dev")
+        self.service = serviceInterface_v2.Service("fetch-from-config")
 
     def get_resource_v3(self, collection, resource_id, include_relations=True,
                         fmt=None):

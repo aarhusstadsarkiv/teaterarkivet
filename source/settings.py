@@ -16,7 +16,7 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 STATIC_DIR = BASE_DIR / "static"
 
 CLIENT = {
-    "api_key": "aar-dev",
+    "api_key": config("API_KEY"),
     "title": "Aarhus Teaters Arkiv",
     "name": "aarhusteater",
     "description": "Aarhus Teater arkiv og historie",
