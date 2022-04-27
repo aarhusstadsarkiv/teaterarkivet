@@ -187,27 +187,27 @@ class CollectionHandler(BaseSessionHandler):
             self.abort(401)
 
 
-class PageHandler(BaseSessionHandler):
-    def get(self, path=None):
-        context = {}
+# class PageHandler(BaseSessionHandler):
+#     def get(self, path=None):
+#         context = {}
 
-        if not path:
-            context["page"] = {}
-            context["page"]["type"] = "homepage"
-            self.render("page_home.html", context)
+#         if not path:
+#             context["page"] = {}
+#             context["page"]["type"] = "homepage"
+#             self.render("page_home.html", context)
 
-        elif path == "logout":
-            if self.user:
-                self.auth.logout()
-                self.redirect("/")
-            else:
-                self.render(
-                    "page_message.html",
-                    {"message": "To logout, you need to be logged in"},
-                )
+#         elif path == "logout":
+#             if self.user:
+#                 self.auth.logout()
+#                 self.redirect("/")
+#             else:
+#                 self.render(
+#                     "page_message.html",
+#                     {"message": "To logout, you need to be logged in"},
+#                 )
 
-        else:
-            self.render("page_" + path + ".html", context)
+#         else:
+#             self.render("page_" + path + ".html", context)
 
 
 class LoginHandler(BaseSessionHandler):
@@ -268,7 +268,7 @@ WEBAPP2_dep_CONFIG = {
 
 APPLICATION = webapp2_dep.WSGIApplication(
     [
-        webapp2_dep.Route("/", handler=PageHandler, methods=["GET"]),
+        # webapp2_dep.Route("/", handler=PageHandler, methods=["GET"]),
         # webapp2_dep.Route('/test', handler=TestHandler, methods=['GET']),
         # webapp2_dep.Route("/autocomplete", handler=AutocompleteHandler, methods=["GET"]),
         # webapp2_dep.Route('/signup', handler=SignupHandler, methods=['GET', 'POST']),
