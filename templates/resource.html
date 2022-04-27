@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% set domain = "resourcepage" %}
-{% if collection == "records_v3" %}
+{% if collection == "records" %}
     {% set title = resource.id %}
 {% else %}
     {% set title = resource.display_label %}
@@ -34,7 +34,7 @@
     <div class="page-content">
         <div class="resource_wrapper">
             {% if operation == 'view' %}
-                {% if collection == "records_v3" %}
+                {% if collection == "records" %}
                     {% include 'components/metadata-records--aarhusteater_v3.html' %}
                     {# {% include 'test.html' %} #}
                 {% elif collection in ["people", "creators"] %}

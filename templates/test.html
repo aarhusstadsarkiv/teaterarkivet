@@ -20,8 +20,10 @@
     <p>Id: {{id}}</p>
 {% endif %}
 <dl>
-{% for k, v in resource.items() %}
-    <dt>{{k}}</dt>
-    <dd>{{v}}</dd>
-{% endfor %}
+{% if resource %}
+    {% for k, v in resource.items() %}
+        <dt>{{k}}</dt>
+        <dd>{{v}}</dd>
+    {% endfor %}
+{% endif %}
 </dl>

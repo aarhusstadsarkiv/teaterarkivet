@@ -204,11 +204,11 @@ class Service():
 
         payload = {"operation": "update", "data": data}
 
+        # return payload
         return self._post_request_v2(collection=collection,
                                     operation="update",
                                     resource_id=resource_id,
                                     payload=payload)
-        # return payload
 
     # def insert_resource(self, collection, post_params):
     #     """Posts a new resource to a collection.

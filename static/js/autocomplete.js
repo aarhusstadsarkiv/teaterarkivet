@@ -9,7 +9,7 @@ var entities = new Bloodhound({
             return settings;
         },
         transform: function (payload) {
-            console.log(payload);
+            // console.log(payload);
             var responseArray = payload.result;
             var newArray = [];
             var q = $('.typeahead').val();

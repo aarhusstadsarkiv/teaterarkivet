@@ -247,13 +247,13 @@ class LoginHandler(BaseSessionHandler):
             self.redirect("/login?failed=True")
 
 
-class AutocompleteHandler(BaseSessionHandler):
-    def get(self):
+# class AutocompleteHandler(BaseSessionHandler):
+#     def get(self):
 
-        term = self.request.get("q")
-        if term:
-            self.response.headers["Content-Type"] = "application/json; charset=utf-8"
-            self.response.write(self.client.autocomplete(term))
+#         term = self.request.get("q")
+#         if term:
+#             self.response.headers["Content-Type"] = "application/json; charset=utf-8"
+#             self.response.write(self.client.autocomplete(term))
 
 
 WEBAPP2_dep_CONFIG = {
@@ -270,14 +270,14 @@ APPLICATION = webapp2_dep.WSGIApplication(
     [
         webapp2_dep.Route("/", handler=PageHandler, methods=["GET"]),
         # webapp2_dep.Route('/test', handler=TestHandler, methods=['GET']),
-        webapp2_dep.Route("/autocomplete", handler=AutocompleteHandler, methods=["GET"]),
+        # webapp2_dep.Route("/autocomplete", handler=AutocompleteHandler, methods=["GET"]),
         # webapp2_dep.Route('/signup', handler=SignupHandler, methods=['GET', 'POST']),
         webapp2_dep.Route("/login", handler=LoginHandler, methods=["GET", "POST"]),
-        webapp2_dep.Route(
-            "/<path:(about|how-to-search|cookies|info|logout)>",
-            handler=PageHandler,
-            methods=["GET"],
-        ),
+        # webapp2_dep.Route(
+        #     "/<path:(about|how-to-search|cookies|info|logout)>",
+        #     handler=PageHandler,
+        #     methods=["GET"],
+        # ),
         webapp2_dep.Route("/search", handler=SearchHandler, methods=["GET"]),
         webapp2_dep.Route(
             "/<collection:[a-z\_]+>", handler=CollectionHandler, methods=["GET", "POST"]

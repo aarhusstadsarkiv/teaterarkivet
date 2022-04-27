@@ -15,22 +15,12 @@
     <meta name="format-detection" content="telephone=no">
     <title>{{title}} | {{site.title}}</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles/style.css">
-    <link href="/static/styles/vendor/zoom.css" rel="stylesheet">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="/static/css/vendor/zoom.css" rel="stylesheet">
     <meta name="theme-color" content="#ffffff">
     <script>
         document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
     </script>
-    
-    <script type="text/javascript">
-        window.cookieconsent_options = {"message":"Vi bruger cookies!","dismiss":"OK","learnMore":"Læs mere her.",
-                                        "link":"/cookies","theme":"dark-bottom", "expiryDays": 30};
-    </script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
-   
 </head>
 
 <body class="{{site.name}} {{domain}}">
@@ -112,11 +102,9 @@
                     <li class="list_item"><a class="list_link site-link col_white" href="/about">Om Aarhus Teaters arkiv</a></li>
                     <li class="list_item"><a class="list_link site-link col_white" href="/info">Praktisk information</a></li>
                     <li class="list_item"><a class="list_link site-link col_white" href="/how-to-search">Søgevejledning</a></li>
-                    <li class="list_item"><a class="list_link site-link col_white" href="/cookies">Cookies</a></li>
 	            </ul>
 	    	</div>
 	    </div>
-
     </div>
 
     <!-- Used by site-complementaries and others -->
@@ -124,29 +112,20 @@
     <div class="overlay--20"></div>
     
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script>window.jQuery || document.write('<script src="/static/scripts/vendor/jquery-3.1.1.min.js"><\/script>');</script>
+    <script>window.jQuery || document.write('<script src="/static/js/vendor/jquery-3.1.1.min.js"><\/script>');</script>
 
     <!-- On document ready -->
-    <script src="/static/scripts/utilities.js"></script>
-    <script src="/static/scripts/script.js"></script>
-    <script src="/static/scripts/forms.js"></script>
+    <script src="/static/js/utilities.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/forms.js"></script>
 
     <!-- Vendor and vendor-dependant javascript -->
-    <script src="/static/scripts/vendor/typeahead.bundle.mod.js"></script>
-    <script src="/static/scripts/autocomplete.js"></script>
-    <script src="/static/scripts/relations.js"></script>
-    <script src="/static/scripts/vendor/slinky.js"></script>
-    <script src="/static/scripts/vendor/zoom.js"></script>
-    <script src="/static/scripts/vendor/transition.js"></script>
+    <script src="/static/js/vendor/typeahead.bundle.mod.js"></script>
+    <script src="/static/js/autocomplete.js"></script>
+    <script src="/static/js/relations.js"></script>
+    <script src="/static/js/vendor/slinky.js"></script>
+    <script src="/static/js/vendor/zoom.js"></script>
+    <script src="/static/js/vendor/transition.js"></script>
 
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-135646560-1', 'auto');
-        ga('set', 'anonymizeIp', true);
-        ga('send', 'pageview');
-    </script>
 </body>
 </html>

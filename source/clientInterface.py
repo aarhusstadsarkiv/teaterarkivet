@@ -2,6 +2,8 @@
 import urllib
 import urllib.parse as urlparse
 
+from . import settings
+
 # API-module
 import serviceInterface_v2
 
@@ -14,7 +16,7 @@ class Client():
         self.facets = config.get("facets")
         self.filters = config.get("filters")
         self.default_params = config.get("default_query_params")
-        self.service = serviceInterface_v2.Service("fetch-from-config")
+        self.service = serviceInterface_v2.Service("api_key-fetch-from-config")
 
     def get_resource_v3(self, collection, resource_id, include_relations=True,
                         fmt=None):
@@ -774,8 +776,8 @@ class Client():
             boolean: True if successful, False otherwise.
             payload: response
         """
-        return self.service.autocomplete([('t', q), ('auto_group', '2'), ('limit', '25')], decode=False)
         # return self.service.autocomplete([('t', q), ('limit', '20')], decode=False)
+        return self.service.autocomplete([('t', q), ('auto_group', '2'), ('limit', '25')], decode=False)
 
     def populate_schema(self, schema, data):
         # TODO - doesn't handle arrays
@@ -840,6 +842,9 @@ class Client():
 
         recursive(schema.get("properties"), resource)
         return schema
+
+
+
 
     def generate_facets(self, query_params=None):
 
