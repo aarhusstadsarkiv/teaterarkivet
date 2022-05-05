@@ -1,5 +1,31 @@
+import json
+
+from starlette.datastructures import QueryParams, URL, FormData
 from . import settings, utils
 from .resources import client
+
+
+def get_collection(query_params: QueryParams = None) -> dict:
+    # json-format needed to get aarhusarkivet to ship json
+    default_params = [("curators", "4"), ("fmt", "json")]
+    params = list(set().union(default_params, query_params.multi_items()))
+    # hacky due to differences in json-dict between oaws and aarhusarkivet
+    try:
+        resp = client.get("https://www.aarhusarkivet.dk/search", params=params)
+        resp.raise_for_status()
+    except Exception as e:
+        return {"status_code": resp.status_code, "status_msg": str(e)}
+
+    # Remove irrelevant filters
+    content = resp.json()
+
+    if content.get("filters"):
+        for idx, el in enumerate(content.get("filters")):
+            if el.get("key") not in settings.FILTERS:
+                content["filters"].pop(idx)
+
+    content["status_code"] = 0
+    return content
 
 
 def get_record(record_id: int, json: bool = False) -> dict:
@@ -133,10 +159,12 @@ def get_resource(
     Returns:
         dict: error-dict or resource-dict
     """
-    def format_relations(relations):
 
+    def format_relations(relations):
         def sort_by_value(list_of_dicts, key_name, default=None):
-            decorated = [(dict_.get(key_name, default), dict_) for dict_ in list_of_dicts]
+            decorated = [
+                (dict_.get(key_name, default), dict_) for dict_ in list_of_dicts
+            ]
             return [dict_ for (key, dict_) in decorated]
 
         # NOTE: SITE-SPECIFIK FOR AARHUSTEATER
@@ -154,21 +182,15 @@ def get_resource(
                 offstage.append(rel)
 
         if collection in ["people"]:
-            onstage_sorted = sort_by_value(onstage, 'rel_date_from', '2020-12-12')
-            offstage_sorted = sort_by_value(offstage, 'rel_date_from', '2020-12-12')
+            onstage_sorted = sort_by_value(onstage, "rel_date_from", "2020-12-12")
+            offstage_sorted = sort_by_value(offstage, "rel_date_from", "2020-12-12")
         else:
-            onstage_sorted = sort_by_value(onstage, 'rel_label')
-            offstage_sorted = sort_by_value(offstage, 'rel_label')
+            onstage_sorted = sort_by_value(onstage, "rel_label")
+            offstage_sorted = sort_by_value(offstage, "rel_label")
 
         return [
-            {
-                "label": u"Sceneroller",
-                "data": onstage_sorted
-            },
-            {
-                "label": u"Produktionshold",
-                "data": offstage_sorted
-            }
+            {"label": "Sceneroller", "data": onstage_sorted},
+            {"label": "Produktionshold", "data": offstage_sorted},
         ]
 
     def has_references(collection: str, id: int):
@@ -185,7 +207,7 @@ def get_resource(
             return False
 
         resource: dict = r.json()
-        if resource.get('result'):
+        if resource.get("result"):
             return True
         return False
 
@@ -217,34 +239,144 @@ def get_resource(
         if r.status_code == 200:
             # If succesful request that has relations-content
             resp = r.json()
-            if resp['status_code'] == 0 and resp.get('result'):
-                resource['relations'] = format_relations(resp.get('result'))
+            if resp["status_code"] == 0 and resp.get("result"):
+                resource["relations"] = format_relations(resp.get("result"))
 
-    if collection == 'creators':
+    if collection == "creators":
         collection = resource.get("domain")
     out["is_subject"] = has_references(collection, id)
     if collection == "people":
-        out["is_creator"] = has_references('creators', id)
+        out["is_creator"] = has_references("creators", id)
 
     out["resource"] = resource
 
     return out
 
 
-def autocomplete(term: str, decode=True):
-    """Queries autocomplete
+def create_relation(form: FormData) -> dict:
+    def generate_relation(datalist: FormData):
+        print("Datalist passed to generate_relation:\n", flush=True)
+        print(datalist, flush=True)
+
+        subject_id = (
+            subject_domain
+        ) = object_id = object_domain = rel_label = rel_start = rel_end = None
+
+        for tup in datalist.multi_items():
+            if tup[0] == "subject_id":
+                subject_id = tup[1]
+            if tup[0] == "subject_domain":
+                subject_domain = tup[1]
+            if tup[0] == "object_id":
+                object_id = tup[1]
+            if tup[0] == "object_domain":
+                object_domain = tup[1]
+            if tup[0] == "rel_label":
+                rel_label = tup[1]
+            if tup[0] == "rel_start":
+                rel_start = tup[1]
+            if tup[0] == "rel_end":
+                rel_end = tup[1]
+
+        if subject_id and subject_domain and object_id and object_domain and rel_label:
+
+            if subject_domain == "people" and object_domain == "events":
+                rel_base_type = 7
+                object_url = f"https://openaws.appspot.com/entities/{object_id}"
+                try:
+                    rel_start, rel_end = get_dates(object_url)
+                except Exception:
+                    return False
+            elif subject_domain == "events":
+                rel_base_type = 9
+
+            return [
+                0,
+                subject_id,
+                object_id,
+                [2, 3],
+                rel_base_type,
+                rel_label,
+                rel_start,
+                rel_end,
+            ]
+        else:
+            print("returning False from generate_relation()", flush=True)
+            return False
+
+    def generate_reverse_relation(relation):
+        reverse = list(relation)  # copy relation
+        # update base_rel_type
+        if relation[4] == 7:
+            reverse[4] = 9
+        elif relation[4] == 9:
+            reverse[4] = 7
+        else:
+            return False
+        # flip sub-obj
+        reverse[1] = relation[2]
+        reverse[2] = relation[1]
+
+        return reverse
+
+    def get_dates(url: URL):
+        r = client.get(url, follow_redirects=True)
+        print(f"get_dates() request return status_code: {r.status_code}", flush=True)
+        r.raise_for_status()
+        entity: dict = r.json()
+        date_from = entity.get("date_from")
+        date_to = entity.get("date_to")
+        return [date_from, date_to]
+
+    relation = generate_relation(form)
+    if relation:
+        reverse = generate_reverse_relation(relation)
+
+        url = "https://openaws.appspot.com/relation_tools"
+        payload: dict = {
+            "token": settings.config("API_KEY", cast=str),
+            "operation": "create",
+            "data": json.dumps({"rel_data": [relation, reverse]}),
+        }
+        headers: dict = {"Content-Type": "application/x-www-form-urlencoded"}
+
+        r = client.post(url, data=payload, headers=headers)
+        try:
+            response_to_dict = r.json()
+            return response_to_dict
+        except ValueError as e:
+            return {"status_code": 5, "status_msg": e}
+    else:
+        return {"status_code": 5, "status_msg": "Unable to generate relation."}
+
+
+def delete_relation(id: int) -> dict:
+    url = "https://openaws.appspot.com/relation_tools"
+    payload: dict = {
+        "token": settings.config("API_KEY", cast=str),
+        "operation": "remove",
+        "data": json.dumps({"rel_id": int(id)}),
+    }
+    headers: dict = {"Content-Type": "application/x-www-form-urlencoded"}
+
+    r = client.post(url, data=payload, headers=headers)
+    try:
+        response_to_dict = r.json()
+        return response_to_dict
+    except ValueError as e:
+        return {"status_code": 5, "status_msg": e}
+
+
+def autocomplete(term: str) -> dict:
+    """Queries autocomplete from aarhusiana
 
     Args:
         term (str): string-value of 'q'
-        decode (boolean): utf8-decode before http-request.
 
     Returns:
         payload (list)
     """
     query_params: dict = {"t": term, "auto_group": "2", "limit": "25"}
-
-    # params = self._urlencode(query_params, decode)
-    # url = '?'.join(["https://aarhusiana.appspot.com/autocomplete_v3", params])
     url: str = "https://aarhusiana.appspot.com/autocomplete_v3"
     response = client.get(url, params=query_params, follow_redirects=True, timeout=10)
     return response.json()

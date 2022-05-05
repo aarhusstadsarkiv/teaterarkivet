@@ -17,5 +17,12 @@
 {% block page_content %}
 	<div class="page-content">
 		<p>{{message}}</p>
+        <div>
+            {% for k, v in request.items() %}
+                <dt>{{k}}</dt>
+                <dd>{{v}}</dd>
+            {% endfor %}
+        </div>
+        <p>{{url_params}}</p>
 	</div>
 {% endblock page_content %}

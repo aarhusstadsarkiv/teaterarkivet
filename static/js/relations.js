@@ -47,6 +47,7 @@ $(document).ready(function() {
             data: $(this).serialize()
         })
         .done(function(response) {
+            console.log(response);
             $('#relation-form').slideUp(500, function() {
                 $('#relation-form input').each( function(i) {
                     // Reset values from all label and object-fields

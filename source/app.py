@@ -9,8 +9,5 @@ app = Starlette(
     debug=settings.DEBUG,
     routes=routes,
     middleware=middleware,
-    exception_handlers={
-        404: views.not_found,
-        500: views.internal_server_error
-    },
+    exception_handlers={404: views.not_found, 500: views.internal_server_error},
 )

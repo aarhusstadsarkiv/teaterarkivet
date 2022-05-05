@@ -38,34 +38,40 @@ def generate_new_link(key, value=None):
 
 
 def generate_facets(query_params=None):
-
     def generate_facet(facet_file, facet_name, query_params=None):
-
         def recursive(facet_obj, filterParams):
-            repeatable = settings.FILTERS[facet_name].get('repeatable')
+            repeatable = settings.FILTERS[facet_name].get("repeatable")
             for item in facet_obj:
-                if settings.FILTERS[facet_name].get('endpoint') == 'literal':
-                    currentParam = (facet_name, item.get('display_label'))
+                if settings.FILTERS[facet_name].get("endpoint") == "literal":
+                    currentParam = (facet_name, item.get("display_label"))
                 else:
-                    currentParam = (facet_name, item.get('id'))
+                    currentParam = (facet_name, item.get("id"))
 
                 if filterParams:
                     if currentParam in filterParams:
-                        item['remove_link'] = generate_remove_link(filterParams, currentParam)
+                        item["remove_link"] = generate_remove_link(
+                            filterParams, currentParam
+                        )
                     else:
-                        item['add_link'] = generate_add_link(filterParams, currentParam,
-                                            repeatable=repeatable)
+                        item["add_link"] = generate_add_link(
+                            filterParams, currentParam, repeatable=repeatable
+                        )
                 else:
-                    item['add_link'] = generate_add_link(currentFilters=None, newFilter=currentParam,
-                                        repeatable=repeatable)
+                    item["add_link"] = generate_add_link(
+                        currentFilters=None,
+                        newFilter=currentParam,
+                        repeatable=repeatable,
+                    )
 
-                if item.get('children'):
-                    recursive(item['children'], filterParams)
+                if item.get("children"):
+                    recursive(item["children"], filterParams)
 
             return facet_obj
 
         if query_params:
-            filterParams = [(e[0], e[1]) for e in query_params if e[0] in settings.FILTERS]
+            filterParams = [
+                (e[0], e[1]) for e in query_params if e[0] in settings.FILTERS
+            ]
         else:
             filterParams = None
 

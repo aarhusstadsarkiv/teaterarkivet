@@ -58,6 +58,7 @@ class BaseSessionHandler(webapp2_dep.RequestHandler):
         return self.session_store.get_session()
 
 
+# DONE
 class ItemHandler(BaseSessionHandler):
     def get(self, collection, resource_id):
 
@@ -143,6 +144,7 @@ class ItemHandler(BaseSessionHandler):
             self.abort(401)
 
 
+# DONE
 class SearchHandler(BaseSessionHandler):
     def get(self):
         response = self.client.get_collection_v2(self.request.GET.items())
@@ -156,6 +158,7 @@ class SearchHandler(BaseSessionHandler):
             )
 
 
+# DONE
 class CollectionHandler(BaseSessionHandler):
     def get(self, collection):
 
@@ -187,30 +190,30 @@ class CollectionHandler(BaseSessionHandler):
             self.abort(401)
 
 
-# class PageHandler(BaseSessionHandler):
-#     def get(self, path=None):
-#         context = {}
+# DONE
+class PageHandler(BaseSessionHandler):
+    def get(self, path=None):
+        context = {}
 
-#         if not path:
-#             context["page"] = {}
-#             context["page"]["type"] = "homepage"
-#             self.render("page_home.html", context)
+        if not path:
+            context["page"] = {}
+            context["page"]["type"] = "homepage"
+            self.render("page_home.html", context)
 
-#         elif path == "logout":
-#             if self.user:
-#                 self.auth.logout()
-#                 self.redirect("/")
-#             else:
-#                 self.render(
-#                     "page_message.html",
-#                     {"message": "To logout, you need to be logged in"},
-#                 )
+        elif path == "logout":
+            if self.user:
+                self.auth.logout()
+                self.redirect("/")
+            else:
+                self.render(
+                    "page_message.html",
+                    {"message": "To logout, you need to be logged in"},
+                )
 
-#         else:
-#             self.render("page_" + path + ".html", context)
+        else:
+            self.render("page_" + path + ".html", context)
 
-
-class LoginHandler(BaseSessionHandler):
+    # DONEclass LoginHandler(BaseSessionHandler):
     def get(self):
         context = {}
 
@@ -247,13 +250,14 @@ class LoginHandler(BaseSessionHandler):
             self.redirect("/login?failed=True")
 
 
-# class AutocompleteHandler(BaseSessionHandler):
-#     def get(self):
+# DONE
+class AutocompleteHandler(BaseSessionHandler):
+    def get(self):
 
-#         term = self.request.get("q")
-#         if term:
-#             self.response.headers["Content-Type"] = "application/json; charset=utf-8"
-#             self.response.write(self.client.autocomplete(term))
+        term = self.request.get("q")
+        if term:
+            self.response.headers["Content-Type"] = "application/json; charset=utf-8"
+            self.response.write(self.client.autocomplete(term))
 
 
 WEBAPP2_dep_CONFIG = {
@@ -261,9 +265,7 @@ WEBAPP2_dep_CONFIG = {
         "user_model": "models.User",
         "user_attributes": ["email_address", "name", "user_level", "user_group"],
     },
-    "webapp2_dep_extras.sessions": {
-        "secret_key": """find in local env file"""
-    },
+    "webapp2_dep_extras.sessions": {"secret_key": """find in local env file"""},
 }
 
 APPLICATION = webapp2_dep.WSGIApplication(
@@ -291,4 +293,3 @@ APPLICATION = webapp2_dep.WSGIApplication(
     debug=True,
     config=WEBAPP2_dep_CONFIG,
 )
-
